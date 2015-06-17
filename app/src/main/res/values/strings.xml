@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NETIS Stat!</string>
+    <string name="app_logo_top">BEEN THERE</string>
+    <string name="app_logo_bottom">DONE THAT!</string>
+    <string name="app_version_info">Version 1.0.0\nCopyright © 2013 NETIC, Inc. All Rights Reserved.</string>
+    <string name="game">Bla-bla</string>
+    <!--<string name="title_activity_main">MainActivity</string>-->
+
+    <string name="login_name">Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Submit</string>
+
+    <string name="base_url">http://stat.netis.ru/</string>
+    <string name="login_url">login.pl</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_change_user">Change user</string>
+    <string name="action_help">Help</string>
+    <string name="action_exit">Exit</string>
+
+    <string name="hello_world">Hello world!</string>
+
+</resources>
