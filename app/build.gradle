@@ -26,5 +26,4 @@ dependencies {
     //    compile 'com.google.android.gms:play-services:7.3.0'
     compile 'org.apache.httpcomponents:httpmime:4.5'
     //    compile 'com.mcxiaoke.volley:library-aar:1.0.1'
-    compile project(':volley')
 }

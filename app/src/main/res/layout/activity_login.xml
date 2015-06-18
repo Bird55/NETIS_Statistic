@@ -53,8 +53,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/passwordTextView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClick" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
