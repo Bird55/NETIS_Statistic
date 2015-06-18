@@ -29,11 +29,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExampleParams"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
-        <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible" >
