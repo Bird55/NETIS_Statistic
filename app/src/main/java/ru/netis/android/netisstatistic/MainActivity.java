@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         if (requestCode == Constants.LOGIN_REQUEST && resultCode == RESULT_OK) {
             AsyncTaskListener listener = this;
             HttpHelper helper = new HttpHelper(URL);
-            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, this);
+            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
             t.execute();
 //            String s = data.getStringExtra("html");
 //            myTextView.setText(Html.fromHtml(s));
