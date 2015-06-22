@@ -50,6 +50,7 @@
         android:layout_height="wrap_content"
         android:text="@string/login_button"
         android:id="@+id/buttonSubmit"
+        android:textAllCaps="false"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/passwordTextView"
         android:layout_alignParentRight="true"
@@ -62,5 +63,15 @@
         android:id="@+id/msgTextView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:layout_below="@+id/msgTextView"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress"/>
 
 </RelativeLayout>
