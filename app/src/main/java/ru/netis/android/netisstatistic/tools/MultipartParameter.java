@@ -1,8 +1,8 @@
-package ru.netis.android.netisstatistic.util;
+package ru.netis.android.netisstatistic.tools;
 
-public class MultiPartParameter {
+public class MultipartParameter {
 
-    public MultiPartParameter(String name, String contentType, String content) {
+    public MultipartParameter(String name, String contentType, String content) {
         this.name = name;
         this.contentType = contentType;
         this.content = content;
@@ -21,8 +21,6 @@ public class MultiPartParameter {
     }
 
     private String name;
-
     private String contentType;
     private String content;
 }
-
