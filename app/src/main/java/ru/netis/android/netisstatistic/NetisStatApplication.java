@@ -2,23 +2,36 @@ package ru.netis.android.netisstatistic;
 
 import android.app.Application;
 
-import ru.netis.android.netisstatistic.util.MyVolley;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 
-/**
- * Application class for the demo. Used to ensure that MyVolley is initialized. {@see MyVolley}
- * @author Ognyan Bankov
- *
- */
 public class NetisStatApplication extends Application {
+
+    public static final String TAG = NetisStatApplication.class.getSimpleName();
+
+    private CookieManager mCookieManager;
+
+    private static NetisStatApplication mInstance;
+
+    public static synchronized NetisStatApplication getInstance() {
+        return NetisStatApplication.mInstance;
+    }
+
+    public CookieManager getCookieManager() {
+        if (mCookieManager == null) {
+            mCookieManager = (CookieManager) CookieManager.getDefault();
+            if (mCookieManager == null) {
+                mCookieManager = new CookieManager();
+                mCookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ORIGINAL_SERVER);
+                CookieManager.setDefault(mCookieManager);
+            }
+        }
+        return mCookieManager;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
-        init();
-    }
-
-
-    private void init() {
-        MyVolley.init(this);
+        NetisStatApplication.mInstance = this;
     }
 }

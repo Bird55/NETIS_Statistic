@@ -1,61 +1,60 @@
 package ru.netis.android.netisstatistic;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.error.VolleyError;
+import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
+import ru.netis.android.netisstatistic.tools.HttpHelper;
+import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-import ru.netis.android.netisstatistic.request.MyMultiPartRequest;
-import ru.netis.android.netisstatistic.util.MyVolley;
+public class LoginActivity extends AppCompatActivity implements AsyncTaskListener {
 
-public class LoginActivity extends Activity {
+    private static final String URL = "http://stat.netis.ru/login.pl";
+    private static final String LOG_TAG = "myLog";
 
-    private static final String URL ="http://stat.netis.ru/login.pl";
-    private EditText mName, mPassword;
+    private HttpHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mName = (EditText) findViewById(R.id.nameEditText);
-        mPassword = (EditText) findViewById(R.id.passwordEditText);
-    }
+        final EditText nameEditText = (EditText) findViewById(R.id.nameEditText);
+        final EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        final Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
 
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.buttonSubmit:
-                RequestQueue queue = MyVolley.getRequestQueue();
-                MyMultiPartRequest myRequest = new MyMultiPartRequest(URL, createMyReqSuccessListener(), createMyReqErrorListener());
-                myRequest.addMultipartParam("user", "text/plain", mName.getText().toString())
-                        .addMultipartParam("password", "text/plain", mPassword.getText().toString());
-                queue.add(myRequest);
-                break;
-        }
-    }
+        final AsyncTaskListener listener = this;
+        helper = new HttpHelper(URL);
 
-    private Response.Listener<String> createMyReqSuccessListener() {
-        return new Response.Listener<String>() {
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(String response) {
-                // TODO здесь смотрим залогинились или нет, если да, то сохраняем SID
-                Log.d(MainActivity.LOG_TAG, "onResponse: " + response);
+            public void onClick(View v) {
+                String param = nameEditText.getText().toString();
+//                helper.addFormPart(new MultipartParameter("name", Constants.CONTENT_TYPE, param));
+                helper.addFormPart("user", param);
+                param = passwordEditText.getText().toString();
+//                helper.addFormPart(new MultipartParameter("password", Constants.CONTENT_TYPE, param));
+                helper.addFormPart("password", param);
+//                helper.addFormPart("submit", "Войти");
+//                helper.addFormPart("return", "//stat.netis.ru/index.pl");
+
+                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
+                t.execute();
             }
-        };
+        });
     }
 
-    private Response.ErrorListener createMyReqErrorListener() {
-        return new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO надо вставить обработку ошибки
-                Log.d(MainActivity.LOG_TAG, "onErrorResponse: " + error.getMessage());
-            }
-        };
+    @Override
+    public void onAsyncTaskFinished(String data) {
+        Log.d(LOG_TAG, "onAsyncTaskFinished " + helper.getCookies());
+        Intent intent = new Intent();
+        intent.putExtra("html", data);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

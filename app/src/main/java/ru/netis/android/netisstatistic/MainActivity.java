@@ -1,23 +1,32 @@
 package ru.netis.android.netisstatistic;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
-public class MainActivity extends ActionBarActivity {
+import java.net.CookieManager;
 
-    public static final String LOG_TAG = "MyLog";
+import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
+import ru.netis.android.netisstatistic.tools.HttpHelper;
+import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
+
+public class MainActivity extends AppCompatActivity implements AsyncTaskListener {
+
+    private static final String URL = "http://stat.netis.ru/saldo.pl";
+    private TextView myTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(getBaseContext(), LoginActivity.class);
-        startActivity(intent);
-        finish();
+        myTextView = (TextView) findViewById(R.id.textView);
     }
 
     @Override
@@ -34,6 +43,8 @@ public class MainActivity extends ActionBarActivity {
             case R.id.action_settings:
                 break;
             case R.id.action_change_user:
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivityForResult(intent, Constants.LOGIN_REQUEST);
                 break;
             case R.id.action_help:
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
@@ -45,5 +56,31 @@ public class MainActivity extends ActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.LOGIN_REQUEST && resultCode == RESULT_OK) {
+            AsyncTaskListener listener = this;
+            HttpHelper helper = new HttpHelper(URL);
+            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
+            t.execute();
+//            String s = data.getStringExtra("html");
+//            myTextView.setText(Html.fromHtml(s));
+        } else {
+            myTextView.setText("Error!");
+        }
+    }
+
+    @Override
+    public void onAsyncTaskFinished(String data) {
+        CookieManager msCookieManager = NetisStatApplication.getInstance().getCookieManager();
+        myTextView.setText(Html.fromHtml(data));
+        if(msCookieManager.getCookieStore().getCookies().size() > 0) {
+            Log.d(Constants.LOG_TAG, "onAsyncTaskFinished Cookie: " + TextUtils.join(",", msCookieManager.getCookieStore().getCookies()));
+        } else {
+            Log.d(Constants.LOG_TAG,  "No Cookies");
+        }
     }
 }

@@ -18,13 +18,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/passwordEditText"
-        android:layout_below="@+id/nameEditText"
-        android:layout_toRightOf="@+id/nameTextView"
-        android:layout_toEndOf="@+id/nameTextView"
-        android:layout_marginTop="17dp" />
+        android:id="@+id/nameEditText"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/passwordEditText"
+        android:layout_alignStart="@+id/passwordEditText"
+        android:layout_alignRight="@+id/passwordEditText"
+        android:layout_alignEnd="@+id/passwordEditText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,12 +37,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nameEditText"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/passwordEditText"
-        android:layout_alignStart="@+id/passwordEditText"
-        android:layout_alignRight="@+id/passwordEditText"
-        android:layout_alignEnd="@+id/passwordEditText" />
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/passwordEditText"
+        android:layout_below="@+id/nameEditText"
+        android:layout_toRightOf="@+id/nameTextView"
+        android:layout_toEndOf="@+id/nameTextView"
+        android:layout_marginTop="17dp" />
 
     <Button
         android:layout_width="match_parent"
@@ -53,8 +53,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/passwordTextView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClick" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"

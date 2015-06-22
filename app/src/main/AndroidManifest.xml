@@ -29,12 +29,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExampleParams"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".HelpActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
