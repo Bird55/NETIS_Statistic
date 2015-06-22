@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 include ':app'
-=======
-include ':volley', ':app'
->>>>>>> without_volley
