@@ -59,7 +59,7 @@ public class HttpHelper {
 
     public HttpHelper addFormPart(String paramName, String value) {
         stringBuilder.append(delimiter).append(boundary).append(lineEnd);
-        stringBuilder.append("Content-Type: text/plain\r\n");
+//        stringBuilder.append("Content-Type: text/plain\r\n");
         stringBuilder.append("Content-Disposition: form-data; name=\"").append(paramName).append("\"").append(lineEnd);
         stringBuilder.append(lineEnd).append(value).append(lineEnd);
         return this;

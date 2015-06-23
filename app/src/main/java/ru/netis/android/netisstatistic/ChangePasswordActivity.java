@@ -16,39 +16,37 @@ import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-public class LoginActivity extends AppCompatActivity implements AsyncTaskListener {
 
-    private static final String URL = "login.pl";
-    private ProgressBar bar;
+public class ChangePasswordActivity extends AppCompatActivity implements AsyncTaskListener {
+
+    private static final String URL = "modify/stat-password.pl";
     private HttpHelper helper;
     MenuItem mActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_change_password);
 
-        final EditText nameEditText = (EditText) findViewById(R.id.nameEditText);
-        final EditText passwordEditText = (EditText) findViewById(R.id.passwordEditText);
-        final Button buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
-        bar = (ProgressBar) findViewById(R.id.progressBar);
+        final EditText oldPassword = (EditText) findViewById(R.id.oldPassword);
+        final EditText newPassword = (EditText) findViewById(R.id.newPassword);
+        final EditText newPasswordRetype = (EditText) findViewById(R.id.newPasswordRetype);
+        final Button btnChangePassword = (Button) findViewById(R.id.btnChangePassword);
 
         final AsyncTaskListener listener = this;
         helper = new HttpHelper(Constants.BASE_URL + URL);
 
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String param = nameEditText.getText().toString();
-//                helper.addFormPart(new MultipartParameter("name", Constants.CONTENT_TYPE, param));
-                helper.addFormPart("user", param);
-                param = passwordEditText.getText().toString();
-//                helper.addFormPart(new MultipartParameter("password", Constants.CONTENT_TYPE, param));
-                helper.addFormPart("password", param);
-//                helper.addFormPart("submit", "Войти");
-//                helper.addFormPart("return", "//stat.netis.ru/index.pl");
+                String param = oldPassword.getText().toString();
+                helper.addFormPart("old_pass", param);
+                param = newPassword.getText().toString();
+                helper.addFormPart("new_pass", param);
+                param = newPasswordRetype.getText().toString();
+                helper.addFormPart("new_pass1", param);
+                helper.addFormPart("change", "Сменить");
 
-//                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, bar);
                 SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
                 showProgressBar();
                 t.execute();
@@ -58,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
 
     @Override
     public void onAsyncTaskFinished(String data) {
-        Log.d(Constants.LOG_TAG, "LoginActivity onAsyncTaskFinished " + helper.getCookies());
+        Log.d(Constants.LOG_TAG, "ChangePasswordActivity onAsyncTaskFinished " + helper.getCookies());
         Intent intent = new Intent();
         intent.putExtra("html", data);
         setResult(RESULT_OK, intent);

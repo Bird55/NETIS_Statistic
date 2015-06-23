@@ -16,10 +16,16 @@
     <string name="login_url">login.pl</string>
 
     <string name="action_settings">Settings</string>
-    <string name="action_change_user">Change user</string>
+    <string name="action_login">Login</string>
     <string name="action_help">Help</string>
     <string name="action_exit">Exit</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="new_password_retype">New password(retype)</string>
+    <string name="btn_change_password">Change</string>
+    <string name="action_change_password">Change password</string>
 
 </resources>

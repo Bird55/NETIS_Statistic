@@ -10,10 +10,15 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_change_user"
-        android:title="@string/action_change_user"
+        android:id="@+id/action_login"
+        android:title="@string/action_login"
         app:showAsAction="never" />
     <!--android:orderInCategory="100"-->
+
+    <item
+        android:id="@+id/action_change_password"
+        android:title="@string/action_change_password"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_help"
