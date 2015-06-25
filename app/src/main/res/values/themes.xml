@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LightTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/greenPrimary1</item>
+        <item name="colorPrimaryDark">@color/greenPrmrDark1</item>
+        <item name="android:windowBackground">@color/mn_bck1</item>
+        <item name="colorAccent">@color/fabBckgrnd1</item>
+    </style>
+
+    <style name="DarkTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/greyPrimary1</item>
+        <item name="colorPrimaryDark">@color/greyPrmrDark1</item>
+        <item name="android:windowBackground">@color/mn_bck2</item>
+        <item name="colorAccent">@color/fabBckgrnd2</item>
+    </style>
+
+</resources>

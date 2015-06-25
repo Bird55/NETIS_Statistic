@@ -7,4 +7,16 @@
     <color name="color_preloader_start">#000000</color>
     <color name="color_preloader_center">#000000</color>
     <color name="color_preloader_end">#ff56a9c7</color>
+
+    <color name="greenPrimary1">#00796a</color>
+    <color name="greenPrmrDark1">#004a3b</color>
+    <color name="mn_bck1">#fafafa</color>
+    <color name="fabBckgrnd1">#bf5d54</color>
+    <color name="xz1">#dddddd</color>
+
+    <color name="greyPrimary1">#74120f</color>
+    <color name="greyPrmrDark1">#530503</color>
+    <color name="mn_bck2">#212121</color>
+    <color name="fabBckgrnd2">#00685a</color>
+    <color name="xz2">#464646</color>
 </resources>
