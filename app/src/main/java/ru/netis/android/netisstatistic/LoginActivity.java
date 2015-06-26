@@ -16,12 +16,22 @@ import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-public class LoginActivity extends AppCompatActivity implements AsyncTaskListener {
+/**
+ * Класс служит для получения доступа к сайту статистики. При удачном результате в
+ * хранилище менеджера <b>Cooies</b> заносится значение для <b>SID</b>
+ * @author Alexey Solovyev
+ * @version 1.0
+ */
 
+public class LoginActivity extends AppCompatActivity implements AsyncTaskListener {
+    /** Часть URL, указывающая скрипт подключения к сайту*/
     private static final String URL = "login.pl";
+    /** ProgressBar используется, если прогресс пророцесса отображается в отдельном диалоге */
     private ProgressBar bar;
-    private HttpHelper helper;
+    /** Пункт меню, в котором отображается ProgressBar */
     MenuItem mActionProgressItem;
+    /** Вспомогательный класс, который формирует запрос к серверу статистики и получает ответ*/
+    private HttpHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +50,10 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
             @Override
             public void onClick(View v) {
                 String param = nameEditText.getText().toString();
-//                helper.addFormPart(new MultipartParameter("name", Constants.CONTENT_TYPE, param));
                 helper.addFormPart("user", param);
                 param = passwordEditText.getText().toString();
-//                helper.addFormPart(new MultipartParameter("password", Constants.CONTENT_TYPE, param));
                 helper.addFormPart("password", param);
 //                helper.addFormPart("submit", "Войти");
-//                helper.addFormPart("return", "//stat.netis.ru/index.pl");
 
 //                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, bar);
                 SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
@@ -56,6 +63,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
         });
     }
 
+    /**
+     * Реализация метода интерфейса {@link AsyncTaskListener}, который вызывается
+     * после окончания работы класса {@link SendHttpRequestTask}
+     * @param data ответ сервера
+     */
     @Override
     public void onAsyncTaskFinished(String data) {
         Log.d(Constants.LOG_TAG, "LoginActivity onAsyncTaskFinished " + helper.getCookies());
@@ -67,22 +79,47 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        Log.d(Constants.LOG_TAG, "onCreateOptionsMenu ");
+        return true;
+    }
+
+    /**
+     * <p>Устанавливает ProgressBar в меню Activity</p>
+     * <p></p>За основу взят материал из этого
+     * <a href="https://guides.codepath.com/android/Handling-ProgressBars">ресурса</a></p>
+     *
+     * @param menu Меню в которое подключается ProgressBar
+     */
+    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login, menu);
         // Store instance of the menu item containing progress
         mActionProgressItem = menu.findItem(R.id.miActionProgress);
+        if (mActionProgressItem == null) {
+            Log.d(Constants.LOG_TAG, "onPrepareOptionsMenu: mActionProgressItem == null");
+        }else {
+            Log.d(Constants.LOG_TAG, "onPrepareOptionsMenu: mActionProgressItem != null");
+        }
         // Extract the action-view from the menu item
         ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(mActionProgressItem);
         // Return to finish
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * Включает видимость Progressbar
+     */
     public void showProgressBar() {
         // Show progress item
         mActionProgressItem.setVisible(true);
     }
 
+    /**
+     * Выключает видимость Progressbar
+     */
     public void hideProgressBar() {
         // Hide progress item
         mActionProgressItem.setVisible(false);

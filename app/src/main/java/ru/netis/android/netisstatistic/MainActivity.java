@@ -3,7 +3,14 @@ package ru.netis.android.netisstatistic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +21,7 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
@@ -21,10 +29,16 @@ import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 public class MainActivity extends AppCompatActivity implements AsyncTaskListener {
+    private static final String DATA_FRAGMENT_TAG = DataFragment.class.getCanonicalName();
+    private static final int MENU_GROUP = 0;
 
     private static final String URL = "saldo.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +47,69 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
         myTextView = (TextView) findViewById(R.id.textView);
 
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        setupToolbar();
+        setupNavigationView();
+        setupDataFragment();
+        setupNavigationMenu();
+
         String cookie = getCookie(Constants.BASE_URL);
         Log.d(Constants.LOG_TAG, "onCreate cookie = " + (cookie == null ? "null" : cookie));
+    }
+
+    private void setupNavigationMenu() {
+        Menu menu = navigationView.getMenu();
+        menu.clear();
+        String[] menuList = getResources().getStringArray(R.array.navigation_menu);
+        int item = 0;
+        for (String strItem : menuList) {
+            menu.add(MENU_GROUP, item, item, strItem);
+            if (item == 0) {
+                menu.getItem(0).setChecked(true);
+//                setCurrentArticle(articles.getArticle(articleTitle));
+            }
+            Log.d(Constants.LOG_TAG, "setupNavigationMenu " + item + " " + strItem);
+            item++;
+        }
+        menu.setGroupCheckable(MENU_GROUP, true, true);
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void setupNavigationView() {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        // TODO my menu insert here
+//                        selectArticle(menuItem.getTitle());
+                        return true;
+                    }
+                });
+    }
+
+    private void setupDataFragment() {
+        DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag(DATA_FRAGMENT_TAG);
+        if (dataFragment == null) {
+            dataFragment = (DataFragment) Fragment.instantiate(this, DataFragment.class.getName());
+            dataFragment.setRetainInstance(true);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(dataFragment, DATA_FRAGMENT_TAG);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -126,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         }
 
         assert listCookies != null;
-        if (listCookies != null || listCookies.size() != 0) {
+        if (listCookies.size() != 0) {
             ret = listCookies.toString();
         }
 

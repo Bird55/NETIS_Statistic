@@ -3,12 +3,17 @@
     <color name="logo_color">#FFFF0F</color>
     <color name="version_color">#f0f0f0</color>
     <color name="version_bkgrd">#1a1a48</color>
+
     <color name="my_error">#fff00000</color>
     <color name="color_preloader_start">#000000</color>
     <color name="color_preloader_center">#000000</color>
     <color name="color_preloader_end">#ff56a9c7</color>
 
+    <color name="sa_green">#1E9618</color>
+    <color name="sa_green_dark">#146310</color>
+    <color name="sa_green_transparent">#201E9618</color>
     <color name="greenPrimary1">#00796a</color>
+
     <color name="greenPrmrDark1">#004a3b</color>
     <color name="mn_bck1">#fafafa</color>
     <color name="fabBckgrnd1">#bf5d54</color>

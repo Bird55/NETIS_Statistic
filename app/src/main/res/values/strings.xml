@@ -6,7 +6,7 @@
     <string name="app_logo_bottom">DONE THAT!</string>
     <string name="app_version_info">Version 1.0.0\nCopyright © 2013 NETIC, Inc. All Rights Reserved.</string>
     <string name="game">Bla-bla</string>
-    <!--<string name="title_activity_main">MainActivity</string>-->
+    <string name="driver_title">NETIS statistics</string>
 
     <string name="login_name">Name</string>
     <string name="login_password">Password</string>
