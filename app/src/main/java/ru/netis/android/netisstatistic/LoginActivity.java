@@ -78,13 +78,6 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
         finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        Log.d(Constants.LOG_TAG, "onCreateOptionsMenu ");
-        return true;
-    }
-
     /**
      * <p>Устанавливает ProgressBar в меню Activity</p>
      * <p></p>За основу взят материал из этого

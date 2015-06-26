@@ -8,12 +8,6 @@
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         app:actionLayout="@layout/action_view_progress" />
-    <item
-        android:id="@+id/test"
-        android:title="Test"
-        android:visible="true"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
 </menu>
 
 
