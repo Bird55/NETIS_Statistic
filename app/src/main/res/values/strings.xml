@@ -12,8 +12,8 @@
     <string name="login_password">Password</string>
     <string name="login_button">Submit</string>
 
-    <string name="base_url">http://stat.netis.ru/</string>
-    <string name="login_url">login.pl</string>
+    <string name="base_url" translatable="false">http://stat.netis.ru/</string>
+    <string name="login_url" translatable="false">login.pl</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_login">Login</string>
@@ -27,5 +27,10 @@
     <string name="new_password_retype">New password(retype)</string>
     <string name="btn_change_password">Change</string>
     <string name="action_change_password">Change password</string>
+    <string name="account_on_prepay">Get prepayment account</string>
+    <string name="consuming">View records of consumption</string>
+    <string name="payments">Viewing received payments and monthly charges</string>
+    <string name="services">View a list of services with the tariff plans</string>
+    <string name="sessions">Viewing records of communication sessions</string>
 
 </resources>

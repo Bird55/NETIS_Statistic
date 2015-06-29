@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NETIS Stat!</string>
+    <string name="btn_change_password">Изменить</string>
+    <string name="login_button">Войти</string>
+    <string name="login_name">Имя</string>
+    <string name="login_password">Пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="new_password_retype">Новый пароль (повтор)</string>
+    <string name="old_password">Старый пароль</string>
+
+    <string name="payments">Просмотр поступивших платежей и начислений по месяцам</string>
+    <string name="consuming">Просмотр записей о потреблении</string>
+    <string name="sessions">Просмотр записей о сеансах связи</string>
+    <string name="services">Просмотр списка услуг с тарифными планами</string>
+
+    <string name="account_on_prepay">Получить счёт на предоплату</string>
+    <string name="action_exit">Выход</string>
+    <string name="action_help">Подсказка</string>
+    <string name="action_login">Логин</string>
+    <string name="action_settings">Настройка</string>
+
+</resources>
