@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_progress, menu);
         // Store instance of the menu item containing progress
         mActionProgressItem = menu.findItem(R.id.miActionProgress);
         if (mActionProgressItem == null) {

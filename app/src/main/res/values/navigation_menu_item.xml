@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="navigation_menu">
-        <item>Balance</item>
-        <item>Bla-bla-bla</item>
-    </string-array>
-</resources>

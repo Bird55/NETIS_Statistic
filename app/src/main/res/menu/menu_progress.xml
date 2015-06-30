@@ -2,13 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/miActionProgress"
-        android:title="Changing..."
+        android:title=""
         android:visible="false"
         android:orderInCategory="100"
         app:showAsAction="ifRoom"
         app:actionLayout="@layout/action_view_progress" />
 </menu>
-
-<!--
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ru.netis.android.netisstatistic.ChangePasswordActivity"-->

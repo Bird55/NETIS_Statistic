@@ -67,7 +67,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements AsyncTa
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_progress, menu);
         // Store instance of the menu item containing progress
         mActionProgressItem = menu.findItem(R.id.miActionProgress);
         // Extract the action-view from the menu item
