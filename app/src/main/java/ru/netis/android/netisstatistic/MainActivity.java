@@ -4,12 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -19,14 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
@@ -34,7 +27,6 @@ import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
@@ -42,9 +34,6 @@ import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 public class MainActivity extends AppCompatActivity implements AsyncTaskListener {
-    private static final String DATA_FRAGMENT_TAG = DataFragment.class.getCanonicalName();
-    private static final int MENU_GROUP = 0;
-
     private Drawer.Result drawResult;
 
     private static final String URL = "saldo.pl";
@@ -61,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
+            toolbar.setTitleTextColor(Color.WHITE);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -86,8 +76,13 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                        startActivity(intent);
+                        Toast.makeText(MainActivity.this, "i=" + i + " l=" + l + " item=" + iDrawerItem.toString(), Toast.LENGTH_SHORT).show();
+                        switch (i) {
+                            case 0:
+                                Intent intent = new Intent(MainActivity.this, PaymentsActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
                     }
                 })
                 .build();
@@ -96,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private IDrawerItem[] initializeDrawerItems() {
         return new IDrawerItem[]{new PrimaryDrawerItem()
                 .withName(R.string.payments)
-                .withIcon(R.drawable.abc_ic_search_api_mtrl_alpha)
+//                .withIcon(R.drawable.abc_ic_search_api_mtrl_alpha)
                 .withIdentifier(1),
 //                        new DividerDrawerItem(),
                 new SecondaryDrawerItem()
@@ -104,14 +99,15 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
                 new SecondaryDrawerItem()
                         .withName(R.string.sessions),
                 new SecondaryDrawerItem()
-                        .withName(R.string.services),
-//                        new DividerDrawerItem(),
-                new SectionDrawerItem()
-                        .withName(R.string.section_1)
-                        .setDivider(false),
-                new SectionDrawerItem()
-                        .withName(R.string.section_2)
-                        .setDivider(false)};
+                        .withName(R.string.services)
+//                        ,new DividerDrawerItem(),
+//                new SectionDrawerItem()
+//                        .withName(R.string.section_1)
+//                        .setDivider(false),
+//                new SectionDrawerItem()
+//                        .withName(R.string.section_2)
+//                        .setDivider(false)
+        };
     }
 
     private AccountHeader.Result createAccountHeader() {
@@ -134,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             super.onBackPressed();
         }
     }
+/*
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -146,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         super.onRestoreInstanceState(savedInstanceState);
         myTextView.setText(savedInstanceState.getString("saldo"));
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -25,4 +25,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.5'
     compile 'com.android.support:design:22.2.0'
     compile 'com.mikepenz.materialdrawer:library:2.9.8'
+    compile 'org.jsoup:jsoup:1.8.2'
 }
