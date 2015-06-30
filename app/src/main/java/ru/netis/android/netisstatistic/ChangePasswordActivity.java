@@ -33,7 +33,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements AsyncTa
         final EditText newPasswordRetype = (EditText) findViewById(R.id.newPasswordRetype);
         final Button btnChangePassword = (Button) findViewById(R.id.btnChangePassword);
 
-        final AsyncTaskListener listener = this;
+        final AsyncTaskListener listener = (MainActivity)getApplicationContext();
         helper = new HttpHelper(Constants.BASE_URL + URL);
 
         btnChangePassword.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements AsyncTa
                 helper.addFormPart("new_pass1", param);
                 helper.addFormPart("change", "Сменить");
 
-                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
+                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_CHANGE_PASSWORD);
                 showProgressBar();
                 t.execute();
             }
@@ -55,7 +55,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements AsyncTa
     }
 
     @Override
-    public void onAsyncTaskFinished(String data) {
+    public void onAsyncTaskFinished(String data, int tag) {
         Log.d(Constants.LOG_TAG, "ChangePasswordActivity onAsyncTaskFinished " + helper.getCookies());
         Intent intent = new Intent();
         intent.putExtra("html", data);

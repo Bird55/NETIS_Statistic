@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view1"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameEditText"
+            android:ems="10"
+            android:layout_alignParentTop="true"
+            android:hint="@string/login_name"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view2"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/login_password"
+            android:ems="10"
+            android:id="@+id/passwordEditText"
+            android:layout_below="@+id/view"
+            android:layout_alignParentEnd="true"
+            tools:ignore="RtlCompat" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_button"
+        android:id="@+id/buttonSubmit"
+        android:textAllCaps="false"
+        />
+</LinearLayout>

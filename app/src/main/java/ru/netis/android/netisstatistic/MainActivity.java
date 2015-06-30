@@ -3,7 +3,6 @@ package ru.netis.android.netisstatistic;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -29,14 +28,16 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import ru.netis.android.netisstatistic.dialogs.LoginDialogFragment;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-public class MainActivity extends AppCompatActivity implements AsyncTaskListener {
+public class MainActivity extends AppCompatActivity implements AsyncTaskListener, LoginDialogFragment.OnLoginCallback {
     private Drawer.Result drawResult;
 
-    private static final String URL = "saldo.pl";
+    private static final String URL_LOGIN = "login.pl";
+    private static final String URL_SALDO = "saldo.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         initializeNavigationDrawer(toolbar);
 
         String cookie = getCookie(Constants.BASE_URL);
-        Log.d(Constants.LOG_TAG, "onCreate cookie = " + (cookie == null ? "null" : cookie));
+        Log.d(Constants.LOG_TAG, "MainActivity onCreate cookie = " + (cookie == null ? "null" : cookie));
     }
 
     private void initializeNavigationDrawer(Toolbar toolbar) {
@@ -91,22 +92,13 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private IDrawerItem[] initializeDrawerItems() {
         return new IDrawerItem[]{new PrimaryDrawerItem()
                 .withName(R.string.payments)
-//                .withIcon(R.drawable.abc_ic_search_api_mtrl_alpha)
                 .withIdentifier(1),
-//                        new DividerDrawerItem(),
                 new SecondaryDrawerItem()
                         .withName(R.string.consuming),
                 new SecondaryDrawerItem()
                         .withName(R.string.sessions),
                 new SecondaryDrawerItem()
                         .withName(R.string.services)
-//                        ,new DividerDrawerItem(),
-//                new SectionDrawerItem()
-//                        .withName(R.string.section_1)
-//                        .setDivider(false),
-//                new SectionDrawerItem()
-//                        .withName(R.string.section_2)
-//                        .setDivider(false)
         };
     }
 
@@ -130,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             super.onBackPressed();
         }
     }
-/*
 
+/*
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -161,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             case R.id.action_settings:
                 break;
             case R.id.action_login:
-                intent = new Intent(getBaseContext(), LoginActivity.class);
-                startActivityForResult(intent, Constants.LOGIN_REQUEST);
+                LoginDialogFragment dialog = new LoginDialogFragment();
+                dialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
                 break;
             case R.id.action_change_password:
                 intent = new Intent(getBaseContext(), ChangePasswordActivity.class);
@@ -186,8 +178,8 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.LOGIN_REQUEST) {
                 AsyncTaskListener listener = this;
-                HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL);
-                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
+                HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_SALDO);
+                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_SALDO);
                 t.execute();
             } else if (requestCode == Constants.CHANGE_LOGIN_REQUEST){
                 String s = data.getStringExtra("html");
@@ -199,17 +191,17 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     }
 
     @Override
-    public void onAsyncTaskFinished(String data) {
-        myTextView.setText(Html.fromHtml(data));
-        String cookie = getCookie(Constants.BASE_URL);
-        Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished cookie = " + (cookie == null ? "null" : cookie));
-/*
-        if(mCookieManager.getCookieStore().getCookies().size() > 0) {
-            Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished Cookie: " + TextUtils.join(",", mCookieManager.getCookieStore().getCookies()));
-        } else {
-            Log.d(Constants.LOG_TAG, "No Cookies");
+    public void onAsyncTaskFinished(String data, int tag) {
+        if (tag == Constants.TAG_SALDO) {
+            myTextView.setText(Html.fromHtml(data));
+            String cookie = getCookie(Constants.BASE_URL);
+            Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished cookie = " + (cookie == null ? "null" : cookie));
+        } else if (tag == Constants.TAG_LOGIN || tag == Constants.TAG_CHANGE_PASSWORD) {
+            AsyncTaskListener listener = this;
+            HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_SALDO);
+            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_SALDO);
+            t.execute();
         }
-*/
     }
 
     private String getCookie(String url ){
@@ -227,5 +219,16 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         }
 
         return ret;
+    }
+
+    @Override
+    public void onLogin(String name, String password) {
+        AsyncTaskListener listener = this;
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_LOGIN);
+        helper.addFormPart("user", name);
+        helper.addFormPart("password", password);
+        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_LOGIN);
+        t.execute();
+        Log.d(Constants.LOG_TAG, "Name = \"" + name + "\" Password = \"" + password + "\"");
     }
 }

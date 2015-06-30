@@ -11,15 +11,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import ru.netis.android.netisstatistic.Constants;
 import ru.netis.android.netisstatistic.NetisStatApplication;
 
-/**
- * Created by bird on 02.06.2015
- */
 public class HttpHelper {
-    private static final String LOG_TAG = "myLog";
-
-//    private static final String LOG_TAG = "myLog";
 
     private HttpURLConnection connection;
     private StringBuilder stringBuilder;
@@ -27,7 +22,6 @@ public class HttpHelper {
     private static final String delimiter = "--";
     private static final String boundary =  "SwA"+Long.toString(System.currentTimeMillis())+"SwA";
 
-    private static final String COOKIES_HEADER = "Set-Cookie";
     private CookieManager msCookieManager;
     private static final String lineEnd = "\r\n";
 
@@ -48,7 +42,7 @@ public class HttpHelper {
         connection.setDoOutput(true);
 
         if(msCookieManager.getCookieStore().getCookies().size() == 0) {
-            Log.d(LOG_TAG, "connectForMultipart: Set cookie");
+            Log.d(Constants.LOG_TAG, "connectForMultipart: Set cookie");
             connection.setRequestProperty("Cookie", "SID=-;path=/");
         }
 
@@ -76,29 +70,10 @@ public class HttpHelper {
     public void finishMultipart() throws Exception {
         stringBuilder.append(delimiter).append(boundary).append(delimiter).append(lineEnd);
 
-        // Длинна запроса вставляется автоматически
-        // Query length is automatically inserted
-//        int length = stringBuilder.length();
-//        connection.setRequestProperty("Content-Length", Integer.toString(length));
-
         connection.connect();
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
 
-//        Log.d(LOG_TAG, "finishMultipart: " + stringBuilder.toString());
-
         outputStream.write((stringBuilder.toString()).getBytes());
-
-/*
-        Map<String, List<String>> headerFields = connection.getHeaderFields();
-        List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
-        if(cookiesHeader != null) {
-            Log.d(LOG_TAG, "finishMultipart ");
-            for (String cookie : cookiesHeader) {
-                Log.d(LOG_TAG, "finishMultipart " + HttpCookie.parse(cookie).get(0));
-                msCookieManager.getCookieStore().add(new URI("http://stat.netis.ru"), HttpCookie.parse(cookie).get(0));
-            }
-        }
-*/
     }
 
     public String getHeaders(){

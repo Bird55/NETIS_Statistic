@@ -55,8 +55,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
                 helper.addFormPart("password", param);
 //                helper.addFormPart("submit", "Войти");
 
-//                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, bar);
-                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener);
+//                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, bar, Constants.TAG_LOGIN);
+                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_LOGIN);
                 showProgressBar();
                 t.execute();
             }
@@ -69,10 +69,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncTaskListene
      * @param data ответ сервера
      */
     @Override
-    public void onAsyncTaskFinished(String data) {
+    public void onAsyncTaskFinished(String data, int tag) {
         Log.d(Constants.LOG_TAG, "LoginActivity onAsyncTaskFinished " + helper.getCookies());
         Intent intent = new Intent();
         intent.putExtra("html", data);
+        intent.putExtra("tag", tag);
         setResult(RESULT_OK, intent);
         hideProgressBar();
         finish();

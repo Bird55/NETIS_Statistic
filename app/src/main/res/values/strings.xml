@@ -16,6 +16,7 @@
     <string name="action_help">Help</string>
     <string name="action_exit">Exit</string>
 
+    <string name="title_change_password">Change Password</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="old_password">Old password</string>
@@ -27,7 +28,7 @@
 
 
     <string name="consuming">View records of consumption</string>
-    <string name="payments">Viewing received payments and \nmonthly charges</string>
+    <string name="payments">Viewing received payments and monthly charges</string>
     <string name="services">View a list of services with the tariff plans</string>
     <string name="sessions">Viewing records of communication sessions</string>
 

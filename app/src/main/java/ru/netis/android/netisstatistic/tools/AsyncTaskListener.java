@@ -1,5 +1,5 @@
 package ru.netis.android.netisstatistic.tools;
 
 public interface AsyncTaskListener {
-    void onAsyncTaskFinished(String data);
+    void onAsyncTaskFinished(String data, int tag);
 }

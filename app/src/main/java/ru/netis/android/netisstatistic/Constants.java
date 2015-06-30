@@ -6,4 +6,7 @@ public final class Constants {
     public static final int LOGIN_REQUEST = 1;
     static final String BASE_URL = "http://stat.netis.ru/";
     public static final int CHANGE_LOGIN_REQUEST = 2;
+    public static final int TAG_LOGIN = 0;
+    public static final int TAG_SALDO = 1;
+    public static final int TAG_CHANGE_PASSWORD = 2;
 }
