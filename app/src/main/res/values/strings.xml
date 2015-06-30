@@ -17,8 +17,7 @@
     <string name="action_exit">Exit</string>
 
     <string name="title_change_password">Change Password</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="title_login">Login</string>
     <string name="old_password">Old password</string>
     <string name="new_password">New password</string>
     <string name="new_password_retype">New password(retype)</string>

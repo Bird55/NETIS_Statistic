@@ -28,16 +28,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import ru.netis.android.netisstatistic.dialogs.ChPassDialogFragment;
 import ru.netis.android.netisstatistic.dialogs.LoginDialogFragment;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-public class MainActivity extends AppCompatActivity implements AsyncTaskListener, LoginDialogFragment.OnLoginCallback {
+public class MainActivity extends AppCompatActivity implements AsyncTaskListener, LoginDialogFragment.OnLoginCallback, ChPassDialogFragment.OnChPassCallback {
     private Drawer.Result drawResult;
 
     private static final String URL_LOGIN = "login.pl";
     private static final String URL_SALDO = "saldo.pl";
+    private static final String URL_CHPASS = "modify/stat-password.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
 
@@ -153,12 +155,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             case R.id.action_settings:
                 break;
             case R.id.action_login:
-                LoginDialogFragment dialog = new LoginDialogFragment();
-                dialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
+                LoginDialogFragment loginDialog = new LoginDialogFragment();
+                loginDialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
                 break;
             case R.id.action_change_password:
-                intent = new Intent(getBaseContext(), ChangePasswordActivity.class);
-                startActivityForResult(intent, Constants.CHANGE_LOGIN_REQUEST);
+                ChPassDialogFragment chPassDialog = new ChPassDialogFragment();
+                chPassDialog.show(getSupportFragmentManager(), ChPassDialogFragment.TAG);
                 break;
             case R.id.action_help:
                 startActivity(new Intent(MainActivity.this, HelpActivity.class));
@@ -230,5 +232,18 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_LOGIN);
         t.execute();
         Log.d(Constants.LOG_TAG, "Name = \"" + name + "\" Password = \"" + password + "\"");
+    }
+
+    @Override
+    public void onChPass(String oldPass, String newPass, String retPass) {
+        AsyncTaskListener listener = this;
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CHPASS);
+        helper.addFormPart("old_pass", oldPass);
+        helper.addFormPart("new_pass", newPass);
+        helper.addFormPart("new_pass1", retPass);
+        helper.addFormPart("change", "Сменить");
+        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_CHANGE_PASSWORD);
+        t.execute();
+
     }
 }

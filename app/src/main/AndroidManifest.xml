@@ -25,21 +25,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@style/LoginTheme"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
-        <activity
             android:name=".HelpActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="adjustResize|stateVisible" >
-        </activity>
-        <activity
-            android:name=".ChangePasswordActivity"
-            android:label="@string/title_activity_change_password"
-            android:theme="@style/LoginTheme" >
         </activity>
         <activity
             android:name=".PaymentsActivity"
