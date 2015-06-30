@@ -16,10 +16,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".SplashActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
@@ -37,6 +33,7 @@
         <activity
             android:name=".HelpActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
@@ -45,8 +42,8 @@
             android:theme="@style/LoginTheme" >
         </activity>
         <activity
-            android:name=".TestActivity"
-            android:label="@string/title_activity_test" >
+            android:name=".PaymentsActivity"
+            android:label="@string/title_activity_payments" >
         </activity>
     </application>
 
