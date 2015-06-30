@@ -42,7 +42,11 @@
         <activity
             android:name=".ChangePasswordActivity"
             android:label="@string/title_activity_change_password"
-            android:theme="@style/LoginTheme">
+            android:theme="@style/LoginTheme" >
+        </activity>
+        <activity
+            android:name=".TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 

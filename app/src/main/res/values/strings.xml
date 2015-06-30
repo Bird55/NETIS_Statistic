@@ -28,9 +28,14 @@
     <string name="btn_change_password">Change</string>
     <string name="action_change_password">Change password</string>
     <string name="account_on_prepay">Get prepayment account</string>
+
+
     <string name="consuming">View records of consumption</string>
-    <string name="payments">Viewing received payments and monthly charges</string>
+    <string name="payments">Viewing received payments and \nmonthly charges</string>
     <string name="services">View a list of services with the tariff plans</string>
     <string name="sessions">Viewing records of communication sessions</string>
 
+    <string name="section_1">Item 1</string>
+    <string name="section_2">Item 2</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>

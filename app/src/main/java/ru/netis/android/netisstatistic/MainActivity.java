@@ -1,6 +1,7 @@
 package ru.netis.android.netisstatistic;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -15,7 +16,19 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.net.CookieManager;
 import java.net.HttpCookie;
@@ -32,12 +45,11 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private static final String DATA_FRAGMENT_TAG = DataFragment.class.getCanonicalName();
     private static final int MENU_GROUP = 0;
 
+    private Drawer.Result drawResult;
+
     private static final String URL = "saldo.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
-
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
 
 
     @Override
@@ -47,68 +59,79 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
         myTextView = (TextView) findViewById(R.id.textView);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        setupToolbar();
-        setupNavigationView();
-        setupDataFragment();
-        setupNavigationMenu();
+        initializeNavigationDrawer(toolbar);
 
         String cookie = getCookie(Constants.BASE_URL);
         Log.d(Constants.LOG_TAG, "onCreate cookie = " + (cookie == null ? "null" : cookie));
     }
 
-    private void setupNavigationMenu() {
-        Menu menu = navigationView.getMenu();
-        menu.clear();
-        String[] menuList = getResources().getStringArray(R.array.navigation_menu);
-        int item = 0;
-        for (String strItem : menuList) {
-            menu.add(MENU_GROUP, item, item, strItem);
-            if (item == 0) {
-                menu.getItem(0).setChecked(true);
-//                setCurrentArticle(articles.getArticle(articleTitle));
-            }
-            Log.d(Constants.LOG_TAG, "setupNavigationMenu " + item + " " + strItem);
-            item++;
-        }
-        menu.setGroupCheckable(MENU_GROUP, true, true);
-    }
+    private void initializeNavigationDrawer(Toolbar toolbar) {
+        AccountHeader.Result accHeaResult = createAccountHeader();
 
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    private void setupNavigationView() {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
+        drawResult = new Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withAccountHeader(accHeaResult)
+                .withDisplayBelowToolbar(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .addDrawerItems(
+                        initializeDrawerItems()
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        // TODO my menu insert here
-//                        selectArticle(menuItem.getTitle());
-                        return true;
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                        startActivity(intent);
                     }
-                });
+                })
+                .build();
     }
 
-    private void setupDataFragment() {
-        DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag(DATA_FRAGMENT_TAG);
-        if (dataFragment == null) {
-            dataFragment = (DataFragment) Fragment.instantiate(this, DataFragment.class.getName());
-            dataFragment.setRetainInstance(true);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(dataFragment, DATA_FRAGMENT_TAG);
-            transaction.commit();
+    private IDrawerItem[] initializeDrawerItems() {
+        return new IDrawerItem[]{new PrimaryDrawerItem()
+                .withName(R.string.payments)
+                .withIcon(R.drawable.abc_ic_search_api_mtrl_alpha)
+                .withIdentifier(1),
+//                        new DividerDrawerItem(),
+                new SecondaryDrawerItem()
+                        .withName(R.string.consuming),
+                new SecondaryDrawerItem()
+                        .withName(R.string.sessions),
+                new SecondaryDrawerItem()
+                        .withName(R.string.services),
+//                        new DividerDrawerItem(),
+                new SectionDrawerItem()
+                        .withName(R.string.section_1)
+                        .setDivider(false),
+                new SectionDrawerItem()
+                        .withName(R.string.section_2)
+                        .setDivider(false)};
+    }
+
+    private AccountHeader.Result createAccountHeader() {
+        IProfile profile = new ProfileDrawerItem()
+                .withName("NETIS Telecom")
+                .withEmail("noc@netis.ru")
+                .withIcon(getResources().getDrawable(R.drawable.logo_footer_01));
+        return new AccountHeader()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.background_material)
+                .addProfiles(profile)
+                .build();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawResult != null && drawResult.isDrawerOpen()) {
+            drawResult.closeDrawer();
+        } else {
+            super.onBackPressed();
         }
     }
 

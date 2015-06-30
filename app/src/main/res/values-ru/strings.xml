@@ -9,7 +9,7 @@
     <string name="new_password_retype">Новый пароль (повтор)</string>
     <string name="old_password">Старый пароль</string>
 
-    <string name="payments">Просмотр поступивших платежей и начислений по месяцам</string>
+    <string name="payments">Просмотр поступивших платежей и \r\nначислений по месяцам</string>
     <string name="consuming">Просмотр записей о потреблении</string>
     <string name="sessions">Просмотр записей о сеансах связи</string>
     <string name="services">Просмотр списка услуг с тарифными планами</string>

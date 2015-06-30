@@ -9,6 +9,9 @@
         <item name="colorControlHighlight">@color/sa_green_transparent</item>
         <item name="android:dropDownListViewStyle">@style/PopupMenuListView</item>
         <item name="dropDownListViewStyle">@style/PopupMenuListView</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <!-- OverFlow menu Styles -->

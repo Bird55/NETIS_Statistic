@@ -24,4 +24,7 @@
     <color name="mn_bck2">#212121</color>
     <color name="fabBckgrnd2">#00685a</color>
     <color name="xz2">#464646</color>
+
+    <color name="colorPrimary">@color/material_blue_grey_800</color>
+    <color name="colorPrimaryDark">@color/material_blue_grey_900</color>
 </resources>
