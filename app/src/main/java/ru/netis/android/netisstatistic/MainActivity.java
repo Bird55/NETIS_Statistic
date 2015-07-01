@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
         myTextView = (TextView) findViewById(R.id.textView);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         if (toolbar != null) {
             toolbar.setTitleTextColor(Color.WHITE);
             setSupportActionBar(toolbar);
