@@ -55,7 +55,7 @@ public class ChPassDialogFragment extends DialogFragment implements View.OnClick
         newPasswordRetype = (EditText) view.findViewById(R.id.newPasswordRetype);
         Button btnChangePassword = (Button) view.findViewById(R.id.btnChangePassword);
 
-        // Set the dialog's title
+        // Set the Dialog's title
         getDialog().setTitle(getResources().getString(R.string.title_change_password));
 
         btnChangePassword.setOnClickListener(this);

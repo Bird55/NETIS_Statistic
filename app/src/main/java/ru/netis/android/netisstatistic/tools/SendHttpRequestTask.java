@@ -1,22 +1,20 @@
 package ru.netis.android.netisstatistic.tools;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-
-import ru.netis.android.netisstatistic.Constants;
 
 public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
 
+
     HttpHelper helper;
     AsyncTaskListener listener;
-    private ProgressBar bar = null;
+    private ProgressDialog progressDialog = null;
     private int tag;
 
-    public SendHttpRequestTask(HttpHelper helper, AsyncTaskListener listener, ProgressBar bar, int tag) {
+    public SendHttpRequestTask(HttpHelper helper, AsyncTaskListener listener, ProgressDialog progressDialog, int tag) {
         this(helper, listener, tag);
-        this.bar = bar;
+        this.progressDialog = progressDialog;
     }
 
     public SendHttpRequestTask(HttpHelper helper, AsyncTaskListener listener, int tag) {
@@ -27,8 +25,8 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPreExecute() {
-        if (bar != null) {
-            bar.setVisibility(View.VISIBLE);
+        if (progressDialog != null) {
+            progressDialog.show();
         }
     }
 
@@ -50,8 +48,8 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String data) {
-        if (bar != null) {
-            bar.setVisibility(View.GONE);
+        if (progressDialog != null) {
+            progressDialog.dismiss();
         }
         try {
             helper.disConnect();

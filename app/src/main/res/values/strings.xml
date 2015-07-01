@@ -35,4 +35,5 @@
     <string name="section_2">Item 2</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_payments">PaymentsActivity</string>
+    <string name="title_progress_dialog">Loading...</string>
 </resources>

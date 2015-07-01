@@ -1,5 +1,6 @@
 package ru.netis.android.netisstatistic;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private static final String URL_CHPASS = "modify/stat-password.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
+    public ProgressDialog progressDialog;
 
 
     @Override
@@ -59,6 +61,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         }
 
         initializeNavigationDrawer(toolbar);
+
+        progressDialog= new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.title_progress_dialog));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(true);
+
 
         String cookie = getCookie(Constants.BASE_URL);
         Log.d(Constants.LOG_TAG, "MainActivity onCreate cookie = " + (cookie == null ? "null" : cookie));
@@ -181,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             if (requestCode == Constants.LOGIN_REQUEST) {
                 AsyncTaskListener listener = this;
                 HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_SALDO);
-                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_SALDO);
+                SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_SALDO);
                 t.execute();
             } else if (requestCode == Constants.CHANGE_LOGIN_REQUEST){
                 String s = data.getStringExtra("html");
@@ -201,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         } else if (tag == Constants.TAG_LOGIN || tag == Constants.TAG_CHANGE_PASSWORD) {
             AsyncTaskListener listener = this;
             HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_SALDO);
-            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_SALDO);
+            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_SALDO);
             t.execute();
         }
     }
@@ -229,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_LOGIN);
         helper.addFormPart("user", name);
         helper.addFormPart("password", password);
-        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_LOGIN);
+        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_LOGIN);
         t.execute();
         Log.d(Constants.LOG_TAG, "Name = \"" + name + "\" Password = \"" + password + "\"");
     }
@@ -242,7 +250,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         helper.addFormPart("new_pass", newPass);
         helper.addFormPart("new_pass1", retPass);
         helper.addFormPart("change", "Сменить");
-        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, Constants.TAG_CHANGE_PASSWORD);
+        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_CHANGE_PASSWORD);
         t.execute();
 
     }

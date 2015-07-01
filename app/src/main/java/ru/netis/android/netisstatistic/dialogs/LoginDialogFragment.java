@@ -54,8 +54,8 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
         passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
         Button buttonSubmit = (Button) view.findViewById(R.id.buttonSubmit);
 
-        // Set the dialog's title
-        getDialog().setTitle(getResources().getString(R.string.title_change_password));
+        // Set the progressDialog's title
+        getDialog().setTitle(getResources().getString(R.string.title_login));
 
         buttonSubmit.setOnClickListener(this);
 
