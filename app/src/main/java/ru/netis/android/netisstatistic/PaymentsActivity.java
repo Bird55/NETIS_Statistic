@@ -20,14 +20,15 @@ import java.util.Calendar;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 
 
-public class PaymentsActivity extends AppCompatActivity implements View.OnClickListener{
+public class PaymentsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerCollback {
     String strFormat = "%02d.%02d.%4d";
+    int yearFrom, yearTo;
+    int monthFrom, monthTo;
+    int dayFrom, dayTo;
 
     Button btnFrom;
     Button btnTo;
 
-    Calendar dateFrom;
-    Calendar dateTo;
     private static final String URL = "view/pmnt.pl";
     private HttpHelper helper;
     MenuItem mActionProgressItem;
@@ -44,13 +45,13 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
         btnTo.setOnClickListener(this);
 
         final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int dayFrom = 1;
-        int dayTo = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+        yearFrom = yearTo = c.get(Calendar.YEAR);
+        monthFrom = monthTo = c.get(Calendar.MONTH);
+        dayFrom = 1;
+        dayTo = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        btnFrom.setText(String.format(strFormat, dayFrom, month + 1, year));
-        btnTo.setText(String.format(strFormat, dayTo, month + 1, year));
+        btnFrom.setText(String.format(strFormat, dayFrom, monthFrom + 1, yearFrom));
+        btnTo.setText(String.format(strFormat, dayTo, monthTo + 1, yearTo));
 
 
 
@@ -63,11 +64,11 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
 
         switch (v.getId()){
             case R.id.btnFrom:
-                newFragment = new DatePickerFragment();
+                newFragment = new DatePickerFragment(yearFrom, monthFrom, dayFrom);
                 newFragment.show(getSupportFragmentManager(), "datePickerFrom");
                 break;
             case R.id.btnTo:
-                newFragment = new DatePickerFragment();
+                newFragment = new DatePickerFragment(yearTo, monthTo, dayTo);
                 newFragment.show(getSupportFragmentManager(), "datePickerTo");
                 break;
             case R.id.btnSubmit:
@@ -111,18 +112,29 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
         mActionProgressItem.setVisible(false);
     }
 
+    @Override
+    public void setDateFrom(int year, int month, int day) {
+        yearFrom = year; monthFrom = month; dayFrom = day;
+    }
+
+    @Override
+    public void setDateTo(int year, int month, int day) {
+        yearTo = year; monthTo = month; dayTo = day;
+    }
+
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
+        int year, month, day;
+
+        public DatePickerFragment(int year, int month, int day) {
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
         }
@@ -131,11 +143,13 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
             if (("datePickerFrom").equals(this.getTag())) {
+                ((PaymentsActivity) getActivity()).setDateFrom(year, month, day);
                 ((PaymentsActivity) getActivity())
                         .btnFrom.setText(String.format(((PaymentsActivity) getActivity()).strFormat,
                                 day, month + 1, year));
             } else {
                 if (("datePickerTo").equals(this.getTag())) {
+                    ((PaymentsActivity) getActivity()).setDateTo(year, month, day);
                     ((PaymentsActivity) getActivity())
                             .btnTo.setText(String.format(((PaymentsActivity) getActivity()).strFormat,
                             day, month + 1, year));
