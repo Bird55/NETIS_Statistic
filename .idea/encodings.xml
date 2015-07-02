@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/app/src/main/java/ru/netis/android/netisstatistic/dialogs/ChPassDialogFragment.java" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/ru/netis/android/netisstatistic/dialogs/LoginDialogFragment.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/dialog_style_border_roundcorner.xml" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/dialog_style_roundcorner.xml" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_ch_pass.xml" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_login.xml" charset="windows-1251" />
     <file url="PROJECT" charset="UTF-8" />

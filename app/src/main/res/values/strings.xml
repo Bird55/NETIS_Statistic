@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_version_info">Version 1.0.0\nCopyright © 2013 NETIC, Inc. All Rights Reserved.</string>
-    <string name="driver_title">NETIS statistics</string>
+    <string name="app_version_info" translatable="false">Version 1.0.0\nCopyright © 2013 NETIC, Inc. All Rights Reserved.</string>
+    <string name="driver_title" translatable="false">NETIS statistics</string>
 
     <string name="login_name">Name</string>
     <string name="login_password">Password</string>
@@ -31,9 +31,11 @@
     <string name="services">View a list of services with the tariff plans</string>
     <string name="sessions">Viewing records of communication sessions</string>
 
-    <string name="section_1">Item 1</string>
-    <string name="section_2">Item 2</string>
-    <string name="title_activity_test">TestActivity</string>
-    <string name="title_activity_payments">PaymentsActivity</string>
+    <string name="section_1" translatable="false">Item 1</string>
+    <string name="section_2" translatable="false">Item 2</string>
+    <string name="title_activity_test" translatable="false">TestActivity</string>
+    <string name="title_activity_payments" translatable="false">PaymentsActivity</string>
     <string name="title_progress_dialog">Loading...</string>
+    <string name="login_cancel">Cancel</string>
+    <string name="app_name">NETIS Stat!</string>
 </resources>

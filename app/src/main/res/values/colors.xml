@@ -2,6 +2,9 @@
 <resources>
 
     <color name="my_error">#fff00000</color>
+    <color name="grey">#DCDCDC</color>
+    <color name="transparent_color">#00000000</color>
+
     <!--This colors are need for progress.xnml-->
     <color name="color_preloader_start">#000000</color>
     <color name="color_preloader_center">#000000</color>

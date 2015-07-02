@@ -54,6 +54,10 @@
         <!--<item name="android:textColor">@color/main_color</item>-->
     </style>
 
+    <style name="Dialog_No_Border">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@color/transparent_color</item>
+    </style>
 
 
     <!--Insert from project mikepenz/MaterialDrawer-->
