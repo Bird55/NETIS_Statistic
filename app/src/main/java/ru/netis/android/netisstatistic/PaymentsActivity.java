@@ -127,6 +127,9 @@ public class PaymentsActivity extends AppCompatActivity implements View.OnClickL
             implements DatePickerDialog.OnDateSetListener {
         int year, month, day;
 
+        public DatePickerFragment() {
+        }
+
         public DatePickerFragment(int year, int month, int day) {
             this.year = year;
             this.month = month;
