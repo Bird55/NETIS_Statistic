@@ -3,6 +3,6 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Base.AppTheme" />
 
-    <style name="LoginTheme" parent="Base.LoginTheme"/>
+    <!--<style name="LoginTheme" parent="Base.LoginTheme"/>-->
 
 </resources>
