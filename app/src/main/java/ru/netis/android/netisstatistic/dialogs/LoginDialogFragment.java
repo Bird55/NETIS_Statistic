@@ -53,24 +53,34 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
         nameEditText = (EditText) view.findViewById(R.id.nameEditText);
         passwordEditText = (EditText) view.findViewById(R.id.passwordEditText);
         Button buttonSubmit = (Button) view.findViewById(R.id.buttonSubmit);
+        Button buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
-        // Set the progressDialog's title
-        getDialog().setTitle(getResources().getString(R.string.title_login));
+//        Set the progressDialog's title
+//        getDialog().setTitle(getResources().getString(R.string.title_login));
+//        int width = 300; //getResources().getDimensionPixelSize(R.dimen.popup_width);
+//        int height = 300; //getResources().getDimensionPixelSize(R.dimen.popup_height);
+//        getDialog().getWindow().setLayout(width, height);
 
         buttonSubmit.setOnClickListener(this);
+        buttonCancel.setOnClickListener(this);
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        Editable name = nameEditText.getText();
-        Editable password = passwordEditText.getText();
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
-            // Return the name and password to the calling activity
-            callback.onLogin(name.toString(), password.toString());
+        if (view.getId() == R.id.buttonSubmit) {
+            Editable name = nameEditText.getText();
+            Editable password = passwordEditText.getText();
+            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password)) {
+                // Return the name and password to the calling activity
+                callback.onLogin(name.toString(), password.toString());
+                this.dismiss();
+            } else
+                Toast.makeText(getActivity(), "You should enter your name !", Toast.LENGTH_SHORT).show();
+        } else {
             this.dismiss();
-        } else
-            Toast.makeText(getActivity(), "You should enter your name !", Toast.LENGTH_SHORT).show();
+        }
+  //      Log.d(Constants.LOG_TAG, "onClick: view.getId() = " + view.getId() + "; R.id.btnSubmit = " + R.id.btnSubmit + "; R.id.btnSubmit = " + R.id. + ";");
     }
 }

@@ -19,5 +19,10 @@
     <string name="action_help">Подсказка</string>
     <string name="action_login">Логин</string>
     <string name="action_settings">Настройка</string>
+    <string name="title_login">Войти</string>
+    <string name="title_progress_dialog">Загрузка…</string>
+    <string name="login_cancel">Отказаться</string>
+    <string name="action_change_password">Изменить пароль</string>
+    <string name="title_change_password">Изменить пароль</string>
 
 </resources>

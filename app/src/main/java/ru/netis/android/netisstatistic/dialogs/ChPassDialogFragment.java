@@ -53,26 +53,32 @@ public class ChPassDialogFragment extends DialogFragment implements View.OnClick
         oldPassword = (EditText) view.findViewById(R.id.oldPassword);
         newPassword = (EditText) view.findViewById(R.id.newPassword);
         newPasswordRetype = (EditText) view.findViewById(R.id.newPasswordRetype);
-        Button btnChangePassword = (Button) view.findViewById(R.id.btnChangePassword);
-
+        Button btnChangePassword = (Button) view.findViewById(R.id.buttonChangePassword);
+        Button btnChangePasswordCancel = (Button) view.findViewById(R.id.buttonChangePasswordCancel);
         // Set the Dialog's title
-        getDialog().setTitle(getResources().getString(R.string.title_change_password));
+        //getDialog().setTitle(getResources().getString(R.string.title_change_password));
 
         btnChangePassword.setOnClickListener(this);
+        btnChangePasswordCancel.setOnClickListener(this);
 
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        String oldPass  = oldPassword.getText().toString();
-        String newPass = newPassword.getText().toString();
-        String retPass = newPasswordRetype.getText().toString();
-        if (!TextUtils.isEmpty(oldPass) && !TextUtils.isEmpty(newPass) && !TextUtils.isEmpty(retPass)) {
-            // Return the name and password to the calling activity
-            callback.onChPass(oldPass, newPass, retPass);
+        if (view.getId() == R.id.buttonChangePassword) {
+            String oldPass = oldPassword.getText().toString();
+            String newPass = newPassword.getText().toString();
+            String retPass = newPasswordRetype.getText().toString();
+            if (!TextUtils.isEmpty(oldPass) && !TextUtils.isEmpty(newPass) && !TextUtils.isEmpty(retPass)) {
+                // Return the name and password to the calling activity
+                callback.onChPass(oldPass, newPass, retPass);
+                this.dismiss();
+            } else {
+                Toast.makeText(getActivity(), "You should enter your passwords !", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             this.dismiss();
-        } else
-            Toast.makeText(getActivity(), "You should enter your name !", Toast.LENGTH_SHORT).show();
+        }
     }
 }
