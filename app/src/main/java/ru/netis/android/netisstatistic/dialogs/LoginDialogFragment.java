@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import ru.netis.android.netisstatistic.Constants;
@@ -46,6 +48,12 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
             
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(STYLE_NO_FRAME, R.style.Dialog_No_Border);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,12 +63,11 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
         Button buttonSubmit = (Button) view.findViewById(R.id.buttonSubmit);
         Button buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
-//        Set the progressDialog's title
-//        getDialog().setTitle(getResources().getString(R.string.title_login));
-//        int width = 300; //getResources().getDimensionPixelSize(R.dimen.popup_width);
-//        int height = 300; //getResources().getDimensionPixelSize(R.dimen.popup_height);
-//        getDialog().getWindow().setLayout(width, height);
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.callMain);
 
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        layout.setBackgroundResource(R.drawable.dialog_style_border_roundcorner);
         buttonSubmit.setOnClickListener(this);
         buttonCancel.setOnClickListener(this);
 

@@ -6,4 +6,5 @@
     <dimen name="version_size">5pt</dimen>
     <dimen name="version_spacing">3pt</dimen>
     <dimen name="home_offset">50dip</dimen>
+    <dimen name="dialog_title_font">20sp</dimen>
 </resources>

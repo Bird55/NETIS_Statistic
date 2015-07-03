@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import ru.netis.android.netisstatistic.Constants;
@@ -46,6 +48,12 @@ public class ChPassDialogFragment extends DialogFragment implements View.OnClick
             
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(STYLE_NO_FRAME, R.style.Dialog_No_Border);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +63,11 @@ public class ChPassDialogFragment extends DialogFragment implements View.OnClick
         newPasswordRetype = (EditText) view.findViewById(R.id.newPasswordRetype);
         Button btnChangePassword = (Button) view.findViewById(R.id.buttonChangePassword);
         Button btnChangePasswordCancel = (Button) view.findViewById(R.id.buttonChangePasswordCancel);
-        // Set the Dialog's title
-        //getDialog().setTitle(getResources().getString(R.string.title_change_password));
+        LinearLayout layout = (LinearLayout) view.findViewById(R.id.callMain);
 
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        layout.setBackgroundResource(R.drawable.dialog_style_border_roundcorner);
         btnChangePassword.setOnClickListener(this);
         btnChangePasswordCancel.setOnClickListener(this);
 
