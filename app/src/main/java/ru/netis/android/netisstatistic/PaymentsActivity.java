@@ -13,14 +13,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.Calendar;
 
+import ru.netis.android.netisstatistic.dialogs.DatePickerCallback;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 
 
-public class PaymentsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerCollback {
+public class PaymentsActivity extends AppCompatActivity implements View.OnClickListener, DatePickerCallback {
     String strFormat = "%02d.%02d.%4d";
     int yearFrom, yearTo;
     int monthFrom, monthTo;

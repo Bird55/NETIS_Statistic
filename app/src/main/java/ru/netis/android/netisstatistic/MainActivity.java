@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
     private static final String URL_LOGIN = "login.pl";
     private static final String URL_SALDO = "saldo.pl";
-    private static final String URL_CHPASS = "modify/stat-password.pl";
+    private static final String URL_CH_PASS = "modify/stat-password.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
     public ProgressDialog progressDialog;
@@ -116,11 +117,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         IProfile profile = new ProfileDrawerItem()
                 .withName("NETIS Telecom")
                 .withEmail("noc@netis.ru")
-                .withIcon(getResources().getDrawable(R.drawable.logo_footer_01));
+                .withIcon(ContextCompat.getDrawable(this, R.drawable.logo_footer_01));
+//                .withIcon(getResources().getDrawable(R.drawable.logo_footer_01));
         return new AccountHeader()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.background_material)
-                .addProfiles(profile)
+//                .addProfiles(profile)
                 .build();
     }
 
@@ -245,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onChPass(String oldPass, String newPass, String retPass) {
         AsyncTaskListener listener = this;
-        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CHPASS);
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CH_PASS);
         helper.addFormPart("old_pass", oldPass);
         helper.addFormPart("new_pass", newPass);
         helper.addFormPart("new_pass1", retPass);
