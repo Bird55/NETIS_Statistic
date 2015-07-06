@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView android:id="@+id/Contract1"
-                android:text="@string/name_of_contract"
+                android:text="@string/name_of_field_contract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView android:id="@+id/Contract2"
@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView android:id="@+id/Saldo1"
-                android:text="@string/name_of_saldo"
+                android:text="@string/name_of_field_saldo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView android:id="@+id/Saldo2"
