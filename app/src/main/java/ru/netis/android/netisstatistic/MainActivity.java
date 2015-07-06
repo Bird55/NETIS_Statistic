@@ -221,8 +221,25 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_INDEX);
             t.execute();
         } else if (tag == Constants.TAG_INDEX) {
+            TextView tv;
+
             client = Constants.getClient(data);
-//bah            Log.d(Constants.LOG_TAG, data);
+
+            tv = (TextView) findViewById(R.id.owner1);
+            if (client.isPerson()) {
+                tv.setText("ФИО:");
+            } else {
+                tv.setText("Организация:");
+            }
+            tv = (TextView) findViewById(R.id.owner2);
+            tv.setText(client.getName());
+
+            tv = (TextView) findViewById(R.id.Contract2);
+            tv.setText(client.getContract() + " от " + client.getContractDate());
+
+            tv = (TextView) findViewById(R.id.Saldo2);
+            tv.setText(Double.toString(client.getSaldo()));
+
         }
     }
 
