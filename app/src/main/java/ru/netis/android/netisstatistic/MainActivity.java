@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private static final String URL_CH_PASS = "modify/stat-password.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
+    private AccountHeader.Result accHeaResult;
     public ProgressDialog progressDialog;
+    private Client client = null;
 
 
     @Override
@@ -68,13 +70,17 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(true);
 
+        if (client == null) {
+            LoginDialogFragment loginDialog = new LoginDialogFragment();
+            loginDialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
+        }
 
         String cookie = getCookie(Constants.BASE_URL);
         Log.d(Constants.LOG_TAG, "MainActivity onCreate cookie = " + (cookie == null ? "null" : cookie));
     }
 
     private void initializeNavigationDrawer(Toolbar toolbar) {
-        AccountHeader.Result accHeaResult = createAccountHeader();
+        accHeaResult = createAccountHeader();
 
         drawResult = new Drawer()
                 .withActivity(this)
@@ -185,8 +191,10 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     }
 
 
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(Constants.LOG_TAG, "onActivityResult ");
         if (resultCode == RESULT_OK) {
             if (requestCode == Constants.LOGIN_REQUEST) {
                 AsyncTaskListener listener = this;
@@ -201,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             myTextView.setText("Error!");
         }
     }
+*/
 
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
@@ -210,9 +219,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished cookie = " + (cookie == null ? "null" : cookie));
         } else if (tag == Constants.TAG_LOGIN || tag == Constants.TAG_CHANGE_PASSWORD) {
             AsyncTaskListener listener = this;
-            HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_SALDO);
-            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_SALDO);
+            HttpHelper helper = new HttpHelper(Constants.BASE_URL);
+            SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_INDEX);
             t.execute();
+        } else if (tag == Constants.TAG_INDEX) {
+            client = Constants.getClient(data);
+//bah            Log.d(Constants.LOG_TAG, data);
         }
     }
 
@@ -254,6 +266,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         helper.addFormPart("change", "Сменить");
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_CHANGE_PASSWORD);
         t.execute();
-
+        Log.d(Constants.LOG_TAG, "OldPass = \"" + oldPass + "\" NewPass = \"" + newPass + "\" RetypePass = \"" + retPass + "\"");
     }
 }
