@@ -1,6 +1,10 @@
 package ru.netis.android.netisstatistic;
 
-public class Client {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Client implements Parcelable {
+    boolean ownership; // if true - person else - organization
     private String name;
     private String id;
     private double saldo;
@@ -8,7 +12,6 @@ public class Client {
     private String contractDate;
     private String IPv4;
     private String IPv6;
-    boolean ownership; // if true - person else - organization
 
     public Client(boolean ownership, String name, String id, double saldo, String contract, String contractDate) {
         this(ownership, name, id, saldo, contract, contractDate, null, null);
@@ -27,6 +30,17 @@ public class Client {
         this.contractDate = contractDate;
         this.IPv4 = IPv4;
         this.IPv6 = IPv6;
+    }
+
+    public Client(Parcel source) {
+        ownership = source.readByte() != 0;
+        name = source.readString();
+        id = source.readString();
+        saldo = source.readDouble();
+        contract = source.readString();
+        contractDate = source.readString();
+        IPv4 = source.readString();
+        IPv6 = source.readString();
     }
 
     public boolean isPerson() {
@@ -64,4 +78,34 @@ public class Client {
     public String getIPv6() {
         return IPv6;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (ownership ? 1 : 0));
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeDouble(saldo);
+        dest.writeString(contract);
+        dest.writeString(contractDate);
+        dest.writeString(IPv4);
+        dest.writeString(IPv6);
+    }
+
+    public static final Parcelable.Creator<Client> CREATOR = new Parcelable.Creator<Client>() {
+
+        @Override
+        public Client createFromParcel(Parcel source) {
+            return new Client(source);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 }

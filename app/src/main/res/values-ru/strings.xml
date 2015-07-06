@@ -24,5 +24,9 @@
     <string name="login_cancel">Отказаться</string>
     <string name="action_change_password">Изменить пароль</string>
     <string name="title_change_password">Изменить пароль</string>
+    <string name="name_of_field_contract">Договор:</string>
+    <string name="name_of_field_organization">Организация:</string>
+    <string name="name_of_field_person">ФИО:</string>
+    <string name="name_of_field_saldo">Баланс:</string>
 
 </resources>

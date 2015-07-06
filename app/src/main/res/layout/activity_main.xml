@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:background="#e0e0e0"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:fitsSystemWindows="true">
 
     <include
@@ -12,8 +14,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/imageView"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:src="@drawable/icon"
         android:contentDescription="@null" />
@@ -22,59 +24,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_marginTop="101dp"
+        android:layout_marginTop="10dp"
         android:text="@null"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
         android:textSize="32sp"
-        android:elevation="2dp"
         android:background="@drawable/rectangl_for_text_white"/>
+    <!--android:elevation="2dp"-->
 
-    <TableLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/container"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:shrinkColumns="*"
-        android:stretchColumns="*"
-        android:layout_alignTop="@+id/textView">
+        android:name="ru.netis.android.netisstatistic.fragments.InfoFragment">
+    </LinearLayout>
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView android:id="@+id/owner1"
-                android:text=""
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/owner2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView android:id="@+id/Contract1"
-                android:text="@string/name_of_field_contract"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/Contract2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView android:id="@+id/Saldo1"
-                android:text="@string/name_of_field_saldo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/Saldo2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-        </TableRow>
-
-    </TableLayout>
-
-</RelativeLayout>
-    <!--android:layout_below="@+id/toolBar"-->
+</LinearLayout>

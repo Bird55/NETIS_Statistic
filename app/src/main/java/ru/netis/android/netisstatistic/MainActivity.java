@@ -4,6 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,6 +35,7 @@ import java.util.List;
 
 import ru.netis.android.netisstatistic.dialogs.ChPassDialogFragment;
 import ru.netis.android.netisstatistic.dialogs.LoginDialogFragment;
+import ru.netis.android.netisstatistic.fragments.InfoFragment;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
@@ -70,13 +74,18 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(true);
 
+        String cookie = getCookie(Constants.BASE_URL);
+        Log.d(Constants.LOG_TAG, "MainActivity onCreate cookie = " + (cookie == null ? "null" : cookie));
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
         if (client == null) {
             LoginDialogFragment loginDialog = new LoginDialogFragment();
             loginDialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
         }
-
-        String cookie = getCookie(Constants.BASE_URL);
-        Log.d(Constants.LOG_TAG, "MainActivity onCreate cookie = " + (cookie == null ? "null" : cookie));
     }
 
     private void initializeNavigationDrawer(Toolbar toolbar) {
@@ -141,19 +150,17 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
         }
     }
 
-/*
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("saldo", myTextView.getText().toString());
+        outState.putParcelable("client", client);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        myTextView.setText(savedInstanceState.getString("saldo"));
+        client = savedInstanceState.getParcelable("client");
     }
-*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -223,25 +230,14 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_INDEX);
             t.execute();
         } else if (tag == Constants.TAG_INDEX) {
-            TextView tv;
+
+            FragmentManager mFragmentManager = getSupportFragmentManager();
+            FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
 
             client = Constants.getClient(data);
 
-            tv = (TextView) findViewById(R.id.owner1);
-            if (client.isPerson()) {
-                tv.setText("ФИО:");
-            } else {
-                tv.setText("Организация:");
-            }
-            tv = (TextView) findViewById(R.id.owner2);
-            tv.setText(client.getName());
-
-            tv = (TextView) findViewById(R.id.Contract2);
-            tv.setText(client.getContract() + " от " + client.getContractDate());
-
-            tv = (TextView) findViewById(R.id.Saldo2);
-            tv.setText(Double.toString(client.getSaldo()));
-
+            InfoFragment infoFragment = InfoFragment.newInstance(client);
+            mFragmentTransaction.add(R.id.container, infoFragment).commit();
         }
     }
 

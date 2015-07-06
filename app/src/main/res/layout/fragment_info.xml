@@ -1,0 +1,71 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/fragment_info_margin"
+        android:layout_marginStart="@dimen/fragment_info_margin"
+        android:layout_marginRight="@dimen/fragment_info_margin"
+        android:layout_marginEnd="@dimen/fragment_info_margin">
+        <!--android:shrinkColumns="*"-->
+        <!--android:stretchColumns="*">-->
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
+            <TextView android:id="@+id/owner1"
+                android:text="@string/name_of_field_organization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end" />
+            <TextView android:id="@+id/owner2"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
+            <TextView android:id="@+id/Contract1"
+                android:text="@string/name_of_field_contract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"/>
+            <TextView android:id="@+id/Contract2"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
+            <TextView android:id="@+id/Saldo1"
+                android:text="@string/name_of_field_saldo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"/>
+            <TextView android:id="@+id/Saldo2"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>

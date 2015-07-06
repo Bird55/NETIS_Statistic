@@ -35,11 +35,13 @@
     <string name="section_2" translatable="false">Item 2</string>
     <string name="title_activity_test" translatable="false">TestActivity</string>
     <string name="title_activity_payments" translatable="false">PaymentsActivity</string>
-    <string name="title_progress_dialog">Loading...</string>
+    <string name="title_progress_dialog">Loading…</string>
     <string name="login_cancel">Cancel</string>
     <string name="app_name">NETIS Stat!</string>
 
-    <string name="name_of_field_contract">Contract</string>
-    <string name="name_of_field_saldo">Saldo</string>
-    <string name="name_of_field_organization">Organization</string>
+    <string name="name_of_field_contract">Contract:</string>
+    <string name="name_of_field_saldo">Saldo:</string>
+    <string name="name_of_field_organization">Organization:</string>
+    <string name="name_of_field_person">Person:</string>
+
 </resources>
