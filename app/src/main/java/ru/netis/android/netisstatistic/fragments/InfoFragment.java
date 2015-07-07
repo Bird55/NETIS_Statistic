@@ -80,8 +80,14 @@ public class InfoFragment extends Fragment {
         tv = (TextView) view.findViewById(R.id.Contract2);
         tv.setText(client.getContract() + " от " + client.getContractDate());
 
+        tv = (TextView) view.findViewById(R.id.id2);
+        tv.setText(client.getId());
+
         tv = (TextView) view.findViewById(R.id.Saldo2);
-        tv.setText(Double.toString(client.getSaldo()));
+        tv.setText(Double.toString(client.getSaldo()) +  " \u20BD");
+
+        tv = (TextView) view.findViewById(R.id.ipv42);
+        tv.setText(client.getIPv4());
 
         return view;
     }

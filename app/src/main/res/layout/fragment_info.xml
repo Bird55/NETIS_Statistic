@@ -53,6 +53,23 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginRight="20dp">
+            <TextView android:id="@+id/id1"
+                android:text="@string/name_of_field_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"/>
+            <TextView android:id="@+id/id2"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
             <TextView android:id="@+id/Saldo1"
                 android:text="@string/name_of_field_saldo"
                 android:layout_width="wrap_content"
@@ -64,6 +81,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
+            <TextView android:id="@+id/ipv41"
+                android:text="@string/name_of_field_ipv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"/>
+            <TextView android:id="@+id/ipv42"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </TableRow>
 
     </TableLayout>

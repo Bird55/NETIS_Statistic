@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     }
 
     @Override
-    protected void onPostResume() {
+    protected void onResume() {
         super.onPostResume();
 
         if (client == null) {
@@ -231,13 +231,26 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             t.execute();
         } else if (tag == Constants.TAG_INDEX) {
 
+            boolean isNewClient;
+
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+
+            if (client == null) {
+                isNewClient = true;
+            } else {
+                isNewClient = false;
+            }
 
             client = Constants.getClient(data);
 
             InfoFragment infoFragment = InfoFragment.newInstance(client);
-            mFragmentTransaction.add(R.id.container, infoFragment).commit();
+            if (isNewClient) {
+                mFragmentTransaction.add(R.id.container, infoFragment);
+            } else {
+                mFragmentTransaction.replace(R.id.container, infoFragment);
+            }
+            mFragmentTransaction.commit();
         }
     }
 
