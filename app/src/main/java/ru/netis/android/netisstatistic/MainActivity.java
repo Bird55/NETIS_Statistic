@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private Drawer.Result drawResult;
 
     private static final String URL_LOGIN = "login.pl";
-    private static final String URL_SALDO = "saldo.pl";
+//    private static final String URL_SALDO = "saldo.pl";
     private static final String URL_CH_PASS = "modify/stat-password.pl";
     private TextView myTextView;
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
 
     @Override
     protected void onResume() {
-        super.onPostResume();
+        super.onResume();
 
         if (client == null) {
             LoginDialogFragment loginDialog = new LoginDialogFragment();
@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        Toast.makeText(MainActivity.this, "i=" + i + " l=" + l + " item=" + iDrawerItem.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this, "i=" + i + " l=" + l + " item=" + iDrawerItem.toString(), Toast.LENGTH_SHORT).show();
                         switch (i) {
-                            case 0:
-                                Intent intent = new Intent(MainActivity.this, PaymentsActivity.class);
+                            case 1:
+                                Intent intent = new Intent(MainActivity.this, ConsumeActivity.class);
                                 startActivity(intent);
                                 break;
                         }
@@ -172,8 +172,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent intent;
-
         switch (item.getItemId()) {
             case R.id.action_settings:
                 break;
@@ -236,11 +234,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             FragmentManager mFragmentManager = getSupportFragmentManager();
             FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
 
-            if (client == null) {
-                isNewClient = true;
-            } else {
-                isNewClient = false;
-            }
+            isNewClient = (client == null);
 
             client = Constants.getClient(data);
 
