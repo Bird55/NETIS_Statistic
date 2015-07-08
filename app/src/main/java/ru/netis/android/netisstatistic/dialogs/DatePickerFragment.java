@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.View;
 import android.widget.DatePicker;
 
 import ru.netis.android.netisstatistic.Constants;
@@ -15,7 +14,6 @@ import ru.netis.android.netisstatistic.fragments.ConsumeSetFragment;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     int year, month, day;
     ConsumeSetFragment parent;
-    View view;
 
     public DatePickerFragment() {
     }

@@ -60,7 +60,7 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
         Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: consumeSet is " + consumeSet);
         if (tag == Constants.TAG_CONSUME) {
 
-            boolean isFirstTime  = (consumeSet == null);;
+            boolean isFirstTime  = (consumeSet == null);
 
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();

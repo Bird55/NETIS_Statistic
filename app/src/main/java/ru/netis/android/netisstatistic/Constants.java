@@ -2,17 +2,17 @@ package ru.netis.android.netisstatistic;
 
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public final class Constants {
+
     public static final boolean DEBUG = false;
     public static final String LOG_TAG = "myLog";
-    public static final String CONTENT_TYPE = "text/plain; charset=utf-8";
-    public static final int LOGIN_REQUEST = 1;
+
     static final String BASE_URL = "http://stat.netis.ru/";
-    public static final int CHANGE_LOGIN_REQUEST = 2;
+
+//    public static final int LOGIN_REQUEST = 1;
+//    public static final int CHANGE_LOGIN_REQUEST = 2;
     public static final int TAG_LOGIN = 0;
     public static final int TAG_SALDO = 1;
     public static final int TAG_CHANGE_PASSWORD = 2;
@@ -117,7 +117,7 @@ public final class Constants {
             srv.add(data.substring(i1, i2));
             if (DEBUG) Log.d(LOG_TAG, "srv = " + data.substring(i1, i2));
 
-        } while ((i1 = data.indexOf(s3, i2) + i3) < (i2 = data.indexOf(s2, i2)));
+        } while ((i1 = data.indexOf(s3, i2) + i3) < (data.indexOf(s2, i2)));
 
         String[] s = new String[srv.size()];
         s = srv.toArray(s);
