@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     private static final String URL_LOGIN = "login.pl";
 //    private static final String URL_SALDO = "saldo.pl";
     private static final String URL_CH_PASS = "modify/stat-password.pl";
-    private TextView myTextView;
+
     CookieManager mCookieManager = NetisStatApplication.getInstance().getCookieManager();
     private AccountHeader.Result accHeaResult;
     public ProgressDialog progressDialog;
@@ -56,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        myTextView = (TextView) findViewById(R.id.textView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         if (toolbar != null) {
@@ -218,7 +216,6 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
         if (tag == Constants.TAG_SALDO) {
-            myTextView.setText(Html.fromHtml(data));
             String cookie = getCookie(Constants.BASE_URL);
             Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished cookie = " + (cookie == null ? "null" : cookie));
         } else if (tag == Constants.TAG_LOGIN || tag == Constants.TAG_CHANGE_PASSWORD) {
