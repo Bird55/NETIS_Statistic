@@ -2,12 +2,10 @@ package ru.netis.android.netisstatistic.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.AdapterViewCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,17 +150,13 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
                 newFragment = new DatePickerFragment(this, dateTo.year, dateTo.month, dateTo.day);
                 newFragment.show(activity.getSupportFragmentManager(), "datePickerTo");
                 break;
-//            case R.id.btnSubmit:
-//                break;
+            case R.id.btnSubmit:
+                if (mListener != null) {
+                    mListener.onFragmentInteraction(consumeSet);
+                }
+                break;
         }
         if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onClick consumeSet is " + consumeSet);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -208,7 +202,6 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnConsumeSetFragmentListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(ConsumeSet set);
     }
 }

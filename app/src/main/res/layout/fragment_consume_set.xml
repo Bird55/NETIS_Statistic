@@ -65,4 +65,10 @@
             android:id="@+id/btnTo"
             android:text="@string/value_date_to"/>
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:id="@+id/btnSubmit"
+        android:text="@string/button_submit"/>
 </LinearLayout>

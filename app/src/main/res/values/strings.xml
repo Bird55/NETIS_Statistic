@@ -49,5 +49,6 @@
     <string name="name_date_to">Date of period stop:</string>
     <string name="value_date_from" translatable="false">01.01.1980</string>
     <string name="value_date_to" translatable="false">31.01.1980</string>
+    <string name="button_submit">Submit</string>
 
 </resources>
