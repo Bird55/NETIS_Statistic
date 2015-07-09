@@ -30,5 +30,9 @@
     <string name="name_of_field_saldo">Баланс:</string>
     <string name="name_of_field_id">Лицевой счет:</string>
     <string name="name_of_field_ipv4">Ваш IPv4 адрес:</string>
+    <string name="name_date_from">Дата начала периода:</string>
+    <string name="name_date_to">Дата окончания периода:</string>
+    <string name="service_name">Услуга:</string>
+    <string name="service_prompt">Выберите услугу:</string>
 
 </resources>

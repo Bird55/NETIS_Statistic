@@ -59,6 +59,7 @@ public final class Constants {
         s1 = "счёта: <b>";
         i1 = data.indexOf(s1) + s1.length();
         i2 = data.indexOf("руб", i1);
+        if (DEBUG) Log.d(LOG_TAG, "Constants.getClient s1\"" + s1 + "\" i1 = " + i1 + " i2 = " + i2);
         s1 = data.substring(i1, i2);
 
         if (!s1.contains("color")) {
@@ -100,8 +101,6 @@ public final class Constants {
     }
 
     public static ConsumeSet getConsumeSet(String data) {
-        // TODO Заменить &quot; на символ '"'
-
         ArrayList<String> srv = new ArrayList<>();
         ArrayList<String> val = new ArrayList<>();
         String s1, s2 = "</s", s3 = "value=\"";
@@ -119,7 +118,8 @@ public final class Constants {
 
             i1 = data.indexOf('>', i2) + 1;
             i2 = data.indexOf('<', i1);
-            srv.add(data.substring(i1, i2));
+            s1 = data.substring(i1, i2);
+            srv.add(s1.replace("&quot;", "\""));
             if (DEBUG) Log.d(LOG_TAG, "srv = " + data.substring(i1, i2));
 
         } while ((i1 = data.indexOf(s3, i2) + i3) < (data.indexOf(s2, i2)));

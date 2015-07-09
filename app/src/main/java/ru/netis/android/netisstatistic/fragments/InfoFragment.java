@@ -43,7 +43,6 @@ public class InfoFragment extends Fragment {
      * @param client Parameter 1.
      * @return A new instance of fragment InfoFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static InfoFragment newInstance(Client client) {
         InfoFragment fragment = new InfoFragment(client);
         Bundle args = new Bundle();

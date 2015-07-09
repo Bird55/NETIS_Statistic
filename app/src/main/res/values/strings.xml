@@ -31,11 +31,8 @@
     <string name="services">View a list of services with the tariff plans</string>
     <string name="sessions">Viewing records of communication sessions</string>
 
-    <string name="section_1" translatable="false">Item 1</string>
-    <string name="section_2" translatable="false">Item 2</string>
-    <string name="title_activity_test" translatable="false">TestActivity</string>
-    <string name="title_activity_payments" translatable="false">PaymentsActivity</string>
-    <string name="title_progress_dialog">Loading...</string>
+    <string name="title_activity_payments" translatable="false">Payments Activity</string>
+    <string name="title_progress_dialog">Loading…</string>
     <string name="login_cancel">Cancel</string>
     <string name="app_name">NETIS Stat!</string>
 
@@ -46,13 +43,11 @@
     <string name="name_of_field_id">Account ID:</string>
     <string name="name_of_field_ipv4">Your IPv4 address:</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="service_prompt">Choose a service</string>
     <string name="service_name">Service:</string>
     <string name="name_date_from">Date of period start:</string>
     <string name="name_date_to">Date of period stop:</string>
-    <string name="value_date_from">01.01.1980</string>
-    <string name="value_date_to">31.01.1980</string>
+    <string name="value_date_from" translatable="false">01.01.1980</string>
+    <string name="value_date_to" translatable="false">31.01.1980</string>
 
 </resources>
