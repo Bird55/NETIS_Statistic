@@ -1,4 +1,4 @@
-package ru.netis.android.netisstatistic;
+package ru.netis.android.netisstatistic.helpers;
 
 import android.os.Parcel;
 import android.os.Parcelable;

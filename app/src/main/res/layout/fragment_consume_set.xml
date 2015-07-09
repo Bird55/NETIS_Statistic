@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Service:"/>
+            android:text="@string/service_name"/>
 
         <Spinner
             android:layout_width="0dp"
@@ -22,7 +22,8 @@
             android:layout_height="50dp"
             android:id="@+id/spinnerServices"
             android:background="@android:drawable/btn_dropdown"
-            android:spinnerMode="dropdown"/>
+            android:spinnerMode="dropdown"
+            android:prompt="@string/service_prompt"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/consLayout2"
@@ -35,14 +36,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Date of period start:"/>
+            android:text="@string/name_date_from"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/btnFrom"
-            android:text="01.01.1980"/>
+            android:text="@string/value_date_from"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/consLayout3"
@@ -55,13 +56,13 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Date of period stop:"/>
+            android:text="@string/name_date_to"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:id="@+id/btnTo"
-            android:text="31.01.1980"/>
+            android:text="@string/value_date_to"/>
     </LinearLayout>
 </LinearLayout>

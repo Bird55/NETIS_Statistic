@@ -9,7 +9,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.Calendar;
+
 import ru.netis.android.netisstatistic.fragments.ConsumeSetFragment;
+import ru.netis.android.netisstatistic.helpers.ConsumeSet;
+import ru.netis.android.netisstatistic.helpers.DateOf;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
@@ -57,6 +61,10 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
 
+        int year;
+        int month;
+        int day;
+
         Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: consumeSet is " + consumeSet);
         if (tag == Constants.TAG_CONSUME) {
 
@@ -67,8 +75,20 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
 
             if (isFirstTime) {
                 consumeSet = Constants.getConsumeSet(data);
+
+                final Calendar c = Calendar.getInstance();
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = 1;
+                DateOf dateOf = new DateOf(day, month, year);
+                consumeSet.setDateFrom(dateOf);
+                day = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+                dateOf = new DateOf(day, month, year);
+                consumeSet.setDateTo(dateOf);
+
                 ConsumeSetFragment consumeSetFragment = ConsumeSetFragment.newInstance(consumeSet);
                 transaction.add(R.id.consumeSetContainer, consumeSetFragment);
+
             } else {
                 ConsumeSetFragment consumeSetFragment = ConsumeSetFragment.newInstance(consumeSet);
                 transaction.replace(R.id.consumeSetContainer, consumeSetFragment);

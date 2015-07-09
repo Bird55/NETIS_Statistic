@@ -4,6 +4,9 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import ru.netis.android.netisstatistic.helpers.Client;
+import ru.netis.android.netisstatistic.helpers.ConsumeSet;
+
 public final class Constants {
 
     public static final boolean DEBUG = false;
@@ -97,6 +100,8 @@ public final class Constants {
     }
 
     public static ConsumeSet getConsumeSet(String data) {
+        // TODO Заменить &quot; на символ '"'
+
         ArrayList<String> srv = new ArrayList<>();
         ArrayList<String> val = new ArrayList<>();
         String s1, s2 = "</s", s3 = "value=\"";

@@ -11,7 +11,10 @@ import android.widget.DatePicker;
 import ru.netis.android.netisstatistic.Constants;
 import ru.netis.android.netisstatistic.fragments.ConsumeSetFragment;
 
+// TODO Сделать обработку нажатия клавиши Back
+
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    private static final boolean DEBUG = false;
     int year, month, day;
     ConsumeSetFragment parent;
 
@@ -23,6 +26,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         this.year = year;
         this.month = month;
         this.day = day;
+        if(DEBUG) Log.d(Constants.LOG_TAG, "DatePickerFragment.constructor day = " + day + " month = " + month + " year = " +year);
     }
 
     @NonNull

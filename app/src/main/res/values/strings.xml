@@ -48,5 +48,11 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="service_prompt">Choose a service</string>
+    <string name="service_name">Service:</string>
+    <string name="name_date_from">Date of period start:</string>
+    <string name="name_date_to">Date of period stop:</string>
+    <string name="value_date_from">01.01.1980</string>
+    <string name="value_date_to">31.01.1980</string>
 
 </resources>

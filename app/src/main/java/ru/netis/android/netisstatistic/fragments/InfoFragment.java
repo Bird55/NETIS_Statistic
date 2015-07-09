@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import ru.netis.android.netisstatistic.Client;
+import ru.netis.android.netisstatistic.helpers.Client;
 import ru.netis.android.netisstatistic.R;
 
 /**
