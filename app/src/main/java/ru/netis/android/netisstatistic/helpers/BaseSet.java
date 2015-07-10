@@ -11,7 +11,7 @@ import ru.netis.android.netisstatistic.Constants;
 import ru.netis.android.netisstatistic.NetisStatApplication;
 import ru.netis.android.netisstatistic.R;
 
-public class ConsumeSet implements Parcelable {
+public class BaseSet implements Parcelable {
 
     public static final int DATA_FROM = 0;
     public static final int DATA_TO = 1;
@@ -20,16 +20,16 @@ public class ConsumeSet implements Parcelable {
     String[] services;
     String[] values;
 
-    DateOf dataFrom;
-    DateOf dataTo;
+    DateOf dateFrom;
+    DateOf dateTo;
 
     int indOfService;
 
-    public ConsumeSet(String[] serv, String[] val) {
+    public BaseSet(String[] serv, String[] val) {
         ArrayList<String> list = new ArrayList<>();
 
         list.add(NetisStatApplication.getInstance().getResources().getString(R.string.service_prompt));
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSet.Constructor \"" + list.get(0) + "\"");
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor \"" + list.get(0) + "\"");
         Collections.addAll(list, serv);
         services = new String[list.size()];
         services = list.toArray(services);
@@ -43,11 +43,11 @@ public class ConsumeSet implements Parcelable {
         indOfService = 0;
     }
 
-    public ConsumeSet(Parcel source) {
+    public BaseSet(Parcel source) {
         source.readStringArray(services);
         source.readStringArray(values);
-        dataFrom = source.readParcelable((ClassLoader) DateOf.CREATOR);
-        dataTo = source.readParcelable((ClassLoader) DateOf.CREATOR);
+        dateFrom = source.readParcelable((ClassLoader) DateOf.CREATOR);
+        dateTo = source.readParcelable((ClassLoader) DateOf.CREATOR);
         indOfService = source.readInt();
     }
 
@@ -60,19 +60,19 @@ public class ConsumeSet implements Parcelable {
     }
 
     public DateOf getDateFrom() {
-        return dataFrom;
+        return dateFrom;
     }
 
     public void setDateFrom(DateOf dataFrom) {
-        this.dataFrom = dataFrom;
+        this.dateFrom = dataFrom;
     }
 
     public DateOf getDateTo() {
-        return dataTo;
+        return dateTo;
     }
 
     public void setDateTo(DateOf dataTo) {
-        this.dataTo = dataTo;
+        this.dateTo = dataTo;
     }
 
     public int getIndOfService() {
@@ -92,22 +92,22 @@ public class ConsumeSet implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(services);
         dest.writeStringArray(values);
-        dest.writeParcelable(dataFrom, DATA_FROM);
-        dest.writeParcelable(dataTo, DATA_TO);
+        dest.writeParcelable(dateFrom, DATA_FROM);
+        dest.writeParcelable(dateTo, DATA_TO);
         dest.writeInt(indOfService);
     }
 
 
-    public static final Parcelable.Creator<ConsumeSet> CREATOR = new Parcelable.Creator<ConsumeSet>() {
+    public static final Creator<BaseSet> CREATOR = new Creator<BaseSet>() {
 
         @Override
-        public ConsumeSet createFromParcel(Parcel source) {
-            return new ConsumeSet(source);
+        public BaseSet createFromParcel(Parcel source) {
+            return new BaseSet(source);
         }
 
         @Override
-        public ConsumeSet[] newArray(int size) {
-            return new ConsumeSet[size];
+        public BaseSet[] newArray(int size) {
+            return new BaseSet[size];
         }
     };
 }

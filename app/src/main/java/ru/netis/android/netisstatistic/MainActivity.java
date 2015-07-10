@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     }
 
     private void initializeNavigationDrawer(Toolbar toolbar) {
+
         accHeaResult = createAccountHeader();
 
         drawResult = new Drawer()
@@ -100,11 +101,15 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
 //                        Toast.makeText(MainActivity.this, "i=" + i + " l=" + l + " item=" + iDrawerItem.toString(), Toast.LENGTH_SHORT).show();
+                        Intent intent;
                         switch (i) {
                             case 1:
-                                Intent intent = new Intent(MainActivity.this, ConsumeActivity.class);
+                                intent = new Intent(MainActivity.this, ConsumeActivity.class);
                                 startActivity(intent);
                                 break;
+                            case 2:
+                                intent = new Intent(MainActivity.this, SessionsActivity.class);
+                                startActivity(intent);
                         }
                     }
                 })

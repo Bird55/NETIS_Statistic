@@ -10,20 +10,20 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import ru.netis.android.netisstatistic.fragments.ConsumeSetFragment;
-import ru.netis.android.netisstatistic.helpers.ConsumeSet;
+import ru.netis.android.netisstatistic.fragments.BaseSetFragment;
+import ru.netis.android.netisstatistic.helpers.BaseSet;
 import ru.netis.android.netisstatistic.helpers.DateOf;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 
-public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListener, ConsumeSetFragment.OnConsumeSetFragmentListener {
+public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListener, BaseSetFragment.OnBaseSetFragmentListener {
 
     private static final String URL_CONSUME = "view/consume.pl";
-    public ProgressDialog progressDialog;
+    private static final boolean DEBUG = false;
 
-    private ConsumeSet consumeSet = null;
+    private BaseSet baseSet = null;
 
 
     @Override
@@ -31,7 +31,7 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consume);
 
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.title_progress_dialog));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(true);
@@ -46,15 +46,15 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable("consumeSet", consumeSet);
-        Log.d(Constants.LOG_TAG, "ConsumeActivity.onSaveInstanceState consumeSet is " + consumeSet);
+        outState.putParcelable("baseSet", baseSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onSaveInstanceState baseSet is " + baseSet);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        consumeSet = savedInstanceState.getParcelable("consumeSet");
-        Log.d(Constants.LOG_TAG, "ConsumeActivity.onRestoreInstanceState consumeSet is " + consumeSet);
+        baseSet = savedInstanceState.getParcelable("baseSet");
+        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onRestoreInstanceState baseSet is " + baseSet);
     }
 
     @Override
@@ -64,41 +64,41 @@ public class ConsumeActivity extends AppCompatActivity implements AsyncTaskListe
         int month;
         int day;
 
-        Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: baseSet is " + baseSet);
         if (tag == Constants.TAG_CONSUME) {
 
-            boolean isFirstTime  = (consumeSet == null);
+            boolean isFirstTime  = (baseSet == null);
 
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
 
             if (isFirstTime) {
-                consumeSet = Constants.getConsumeSet(data);
+                baseSet = Constants.getBaseSet(data);
 
                 final Calendar c = Calendar.getInstance();
                 year = c.get(Calendar.YEAR);
                 month = c.get(Calendar.MONTH);
                 day = 1;
                 DateOf dateOf = new DateOf(day, month, year);
-                consumeSet.setDateFrom(dateOf);
+                baseSet.setDateFrom(dateOf);
                 day = c.getActualMaximum(Calendar.DAY_OF_MONTH);
                 dateOf = new DateOf(day, month, year);
-                consumeSet.setDateTo(dateOf);
+                baseSet.setDateTo(dateOf);
 
-                ConsumeSetFragment consumeSetFragment = ConsumeSetFragment.newInstance(consumeSet);
-                transaction.add(R.id.consumeSetContainer, consumeSetFragment);
+                BaseSetFragment baseSetFragment = BaseSetFragment.newInstance(baseSet);
+                transaction.add(R.id.baseSetContainer, baseSetFragment);
 
             } else {
-                ConsumeSetFragment consumeSetFragment = ConsumeSetFragment.newInstance(consumeSet);
-                transaction.replace(R.id.consumeSetContainer, consumeSetFragment);
+                BaseSetFragment baseSetFragment = BaseSetFragment.newInstance(baseSet);
+                transaction.replace(R.id.baseSetContainer, baseSetFragment);
             }
             transaction.commit();
         }
-        Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.end: consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.end: baseSet is " + baseSet);
     }
 
     @Override
-    public void onFragmentInteraction(ConsumeSet set) {
+    public void onFragmentInteraction(BaseSet set) {
 
     }
 }

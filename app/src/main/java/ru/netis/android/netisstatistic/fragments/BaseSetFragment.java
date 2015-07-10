@@ -16,29 +16,27 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import ru.netis.android.netisstatistic.Constants;
-import ru.netis.android.netisstatistic.helpers.ConsumeSet;
 import ru.netis.android.netisstatistic.R;
-import ru.netis.android.netisstatistic.dialogs.DatePickerCallback;
 import ru.netis.android.netisstatistic.dialogs.DatePickerFragment;
+import ru.netis.android.netisstatistic.helpers.BaseSet;
 import ru.netis.android.netisstatistic.helpers.DateOf;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ConsumeSetFragment.OnConsumeSetFragmentListener} interface
+ * {@link BaseSetFragment.OnBaseSetFragmentListener} interface
  * to handle interaction events.
- * Use the {@link ConsumeSetFragment#newInstance} factory method to
+ * Use the {@link BaseSetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ConsumeSetFragment extends Fragment implements View.OnClickListener, DatePickerCallback {
+public class BaseSetFragment extends Fragment implements View.OnClickListener, DatePickerFragment.DatePickerCallback {
 
-    private static final String ARG_CONSUME_SET = "consume_set";
+    private static final String ARG_BASE_SET = "consume_set";
     private static final boolean DEBUG = true;
     public static final String strFormat = "%02d.%02d.%4d";
-    private static final String URL_CONSUME = "view/consume.pl";
 
-    private ConsumeSet consumeSet;
-    private OnConsumeSetFragmentListener mListener;
+    private BaseSet baseSet;
+    private OnBaseSetFragmentListener mListener;
 
     Spinner dropdown;
     Button btnFrom;
@@ -54,20 +52,20 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param consumeSet Parameter 1.
-     * @return A new instance of fragment ConsumeSetFragment.
+     * @param baseSet Parameter 1.
+     * @return A new instance of fragment BaseSetFragment.
      */
-    public static ConsumeSetFragment newInstance(ConsumeSet consumeSet) {
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.newInstance consumeSet is " + consumeSet);
-        ConsumeSetFragment fragment = new ConsumeSetFragment();
+    public static BaseSetFragment newInstance(BaseSet baseSet) {
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.newInstance baseSet is " + baseSet);
+        BaseSetFragment fragment = new BaseSetFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_CONSUME_SET, consumeSet);
+        args.putParcelable(ARG_BASE_SET, baseSet);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ConsumeSetFragment() {
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.Constructor consumeSet is " + consumeSet);
+    public BaseSetFragment() {
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.Constructor baseSet is " + baseSet);
         // Required empty public constructor
     }
 
@@ -75,43 +73,43 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            consumeSet = getArguments().getParcelable(ARG_CONSUME_SET);
+            baseSet = getArguments().getParcelable(ARG_BASE_SET);
         }
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onCreate consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onCreate baseSet is " + baseSet);
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if(getArguments() != null) {
-            consumeSet = getArguments().getParcelable(ARG_CONSUME_SET);
-            dateFrom = consumeSet.getDateFrom();
-            dateTo = consumeSet.getDateTo();
+            baseSet = getArguments().getParcelable(ARG_BASE_SET);
+            dateFrom = baseSet.getDateFrom();
+            dateTo = baseSet.getDateTo();
 
-            dropdown.setSelection(consumeSet.getIndOfService(), true);
+            dropdown.setSelection(baseSet.getIndOfService(), true);
             btnFrom.setText(String.format(strFormat, dateFrom.day, dateFrom.month + 1, dateFrom.year));
             btnTo.setText(String.format(strFormat, dateTo.day, dateTo.month + 1, dateTo.year));
         }
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onViewStateRestore consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onViewStateRestore baseSet is " + baseSet);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_consume_set, container, false);
+        View view = inflater.inflate(R.layout.fragment_base_set, container, false);
 
         dropdown = (Spinner)view.findViewById(R.id.spinnerServices);
-        String[] items = consumeSet.getServices();
+        String[] items = baseSet.getServices();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, items);
         adapter.setDropDownViewResource(R.layout.dropdown_item_1line);
         dropdown.setAdapter(adapter);
-        dropdown.setSelection(consumeSet.getIndOfService(), true);
+        dropdown.setSelection(baseSet.getIndOfService(), true);
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (DEBUG) Log.d(Constants.LOG_TAG, "onItemSelected position = " + position);
-                consumeSet.setIndOfService(position);
+                baseSet.setIndOfService(position);
             }
 
             @Override
@@ -120,8 +118,8 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        dateFrom = consumeSet.getDateFrom();
-        dateTo = consumeSet.getDateTo();
+        dateFrom = baseSet.getDateFrom();
+        dateTo = baseSet.getDateTo();
 
         btnFrom = (Button) view.findViewById(R.id.btnFrom);
         btnFrom.setOnClickListener(this);
@@ -130,7 +128,7 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
         btnTo.setOnClickListener(this);
 
         btnFrom.setText(String.format(strFormat, dateFrom.day, dateFrom.month + 1, dateFrom.year));
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onCreateView. consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onCreateView. baseSet is " + baseSet);
         return view;
     }
 
@@ -139,7 +137,7 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
 
         DialogFragment newFragment;
 
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onClick v.getId() is " + v.getId());
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onClick v.getId() is " + v.getId());
 
         switch (v.getId()){
             case R.id.btnFrom:
@@ -152,11 +150,11 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.btnSubmit:
                 if (mListener != null) {
-                    mListener.onFragmentInteraction(consumeSet);
+                    mListener.onFragmentInteraction(baseSet);
                 }
                 break;
         }
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onClick consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onClick baseSet is " + baseSet);
     }
 
     @Override
@@ -164,19 +162,19 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
         super.onAttach(activity);
         this.activity = (AppCompatActivity)activity;
         try {
-            mListener = (OnConsumeSetFragmentListener) activity;
+            mListener = (OnBaseSetFragmentListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onAttach consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onAttach baseSet is " + baseSet);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeSetFragment.onDetach consumeSet is " + consumeSet);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onDetach baseSet is " + baseSet);
     }
 
     @Override
@@ -201,7 +199,9 @@ public class ConsumeSetFragment extends Fragment implements View.OnClickListener
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnConsumeSetFragmentListener {
-        void onFragmentInteraction(ConsumeSet set);
+    public interface OnBaseSetFragmentListener {
+        void onFragmentInteraction(BaseSet set);
     }
+
+
 }

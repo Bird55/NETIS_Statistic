@@ -4,8 +4,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import ru.netis.android.netisstatistic.helpers.BaseSet;
 import ru.netis.android.netisstatistic.helpers.Client;
-import ru.netis.android.netisstatistic.helpers.ConsumeSet;
 
 public final class Constants {
 
@@ -100,7 +100,7 @@ public final class Constants {
         return new Client(ownership, name, id, saldo, contract, contractDate, IPv4);
     }
 
-    public static ConsumeSet getConsumeSet(String data) {
+    public static BaseSet getBaseSet(String data) {
         ArrayList<String> srv = new ArrayList<>();
         ArrayList<String> val = new ArrayList<>();
         String s1, s2 = "</s", s3 = "value=\"";
@@ -129,6 +129,6 @@ public final class Constants {
         String[] v = new String[val.size()];
         v = srv.toArray(v);
 
-        return new ConsumeSet(s, v);
+        return new BaseSet(s, v);
     }
 }

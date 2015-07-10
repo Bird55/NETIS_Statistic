@@ -9,22 +9,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.DatePicker;
 
 import ru.netis.android.netisstatistic.Constants;
-import ru.netis.android.netisstatistic.fragments.ConsumeSetFragment;
+import ru.netis.android.netisstatistic.fragments.BaseSetFragment;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private static final boolean DEBUG = true;
     int year, month, day;
-    ConsumeSetFragment parent;
+    BaseSetFragment parent;
     private DatePickerDialog.OnDateSetListener mListener;
 
     public DatePickerFragment() {
     }
 
-    public DatePickerFragment(ConsumeSetFragment parent, int year, int month, int day) {
+    public DatePickerFragment(BaseSetFragment parent, int year, int month, int day) {
         this.parent = parent;
         this.year = year;
         this.month = month;
@@ -80,5 +81,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     private static boolean hasJellyBeanAndAbove() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+    }
+
+    public interface DatePickerCallback {
+        void setDateFrom(int year, int month, int day);
+        void setDateTo(int year, int month, int day);
     }
 }

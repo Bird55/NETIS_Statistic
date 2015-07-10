@@ -51,4 +51,7 @@
     <string name="value_date_to" translatable="false">31.01.1980</string>
     <string name="button_submit">Submit</string>
 
+    <string name="title_activity_session">SessionsActivity</string>
+
+
 </resources>
