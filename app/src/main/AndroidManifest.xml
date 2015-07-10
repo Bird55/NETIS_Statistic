@@ -39,7 +39,12 @@
         </activity>
         <activity
             android:name=".SessionsActivity"
-            android:label="@string/title_activity_session" >
+            android:label="@string/title_activity_session"
+            android:theme="@style/MaterialDrawerTheme.Light.DarkToolbar" >
+        </activity>
+        <activity
+            android:name=".BaseActivity"
+            android:label="@string/title_activity_base" >
         </activity>
     </application>
 

@@ -9,7 +9,7 @@ import ru.netis.android.netisstatistic.helpers.Client;
 
 public final class Constants {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static final String LOG_TAG = "myLog";
 
     static final String BASE_URL = "http://stat.netis.ru/";
@@ -21,6 +21,7 @@ public final class Constants {
     public static final int TAG_CHANGE_PASSWORD = 2;
     public static final int TAG_INDEX = 3;
     public static final int TAG_CONSUME = 4;
+    public static final int TAG_SESSIONS = 5;
 
     public static Client getClient(String data) {
         boolean ownership;
@@ -105,6 +106,7 @@ public final class Constants {
         ArrayList<String> val = new ArrayList<>();
         String s1, s2 = "</s", s3 = "value=\"";
         int i1, i2, i3 = s3.length();
+        if (DEBUG) Log.d(LOG_TAG, "Constants.getBaseSet data.length() = " + data.length() );
 
         s1 = "contr_srv_id";
         i1 = data.indexOf(s1) + s1.length();

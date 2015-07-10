@@ -2,11 +2,14 @@ package ru.netis.android.netisstatistic.tools;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.view.View;
+import android.util.Log;
+
+import ru.netis.android.netisstatistic.Constants;
 
 public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
 
 
+    private static final boolean DEBUG = false;
     HttpHelper helper;
     AsyncTaskListener listener;
     private ProgressDialog progressDialog = null;
@@ -21,6 +24,7 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
         this.helper = helper;
         this.listener = listener;
         this.tag = tag;
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.Constructor helper.url = " + helper.getUrl());
     }
 
     @Override
@@ -38,8 +42,8 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
             helper.connectForMultipart();
             helper.finishMultipart();
             data = helper.getResponse();
-//            Log.d(Constants.LOG_TAG, "\r\n" + helper.getHeaders());
-//            Log.d(Constants.LOG_TAG, "\r\n" + helper.getCookies());
+            if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.doInBackground.Headers: " + helper.getHeaders());
+            if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.doInBackground.Cookies" + helper.getCookies());
         } catch (Throwable t) {
             t.printStackTrace();
         }
@@ -56,7 +60,7 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        Log.d(Constants.LOG_TAG, "\r\n" + data);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.onPostExecute data.length() = " + data.length());
         listener.onAsyncTaskFinished(data, tag);
     }
 }

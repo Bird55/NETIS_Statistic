@@ -32,6 +32,10 @@ public class HttpHelper {
         stringBuilder = new StringBuilder();
     }
 
+    public String getUrl() {
+        return url;
+    }
+
     public void connectForMultipart() throws Exception {
         connection = (HttpURLConnection) ( new URL(url)).openConnection();
         connection.setInstanceFollowRedirects(false);

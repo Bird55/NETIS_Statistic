@@ -39,6 +39,11 @@ import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 public class MainActivity extends AppCompatActivity implements AsyncTaskListener, LoginDialogFragment.OnLoginCallback, ChPassDialogFragment.OnChPassCallback {
+
+    private static final boolean AUTHO_LOGIN = true;
+    private static final String NAME = "bah";
+    private static final String PASSWORD = "nontronit";
+
     private Drawer.Result drawResult;
 
     private static final String URL_LOGIN = "login.pl";
@@ -77,11 +82,12 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (client == null) {
-            LoginDialogFragment loginDialog = new LoginDialogFragment();
-            loginDialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
-        }
+        if (AUTHO_LOGIN) {
+            onLogin(NAME, PASSWORD);
+        } else if (client == null) {
+                LoginDialogFragment loginDialog = new LoginDialogFragment();
+                loginDialog.show(getSupportFragmentManager(), LoginDialogFragment.TAG);
+            }
     }
 
     private void initializeNavigationDrawer(Toolbar toolbar) {

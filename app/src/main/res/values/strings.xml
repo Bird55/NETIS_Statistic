@@ -52,6 +52,7 @@
     <string name="button_submit">Submit</string>
 
     <string name="title_activity_session">SessionsActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
 
 
 </resources>
