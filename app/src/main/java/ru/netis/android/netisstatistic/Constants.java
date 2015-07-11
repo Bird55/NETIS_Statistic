@@ -9,7 +9,11 @@ import ru.netis.android.netisstatistic.helpers.Client;
 
 public final class Constants {
 
-    public static final boolean DEBUG = true;
+    public static final String POST = "POST";
+    public static final String GET = "GET";
+
+
+    public static final boolean DEBUG = false;
     public static final String LOG_TAG = "myLog";
 
     static final String BASE_URL = "http://stat.netis.ru/";
@@ -22,6 +26,8 @@ public final class Constants {
     public static final int TAG_INDEX = 3;
     public static final int TAG_CONSUME = 4;
     public static final int TAG_SESSIONS = 5;
+    public static final int TAG_GET_CONSUME = 6;
+    public static final int TAG_GET_SESSIONS = 7;
 
     public static Client getClient(String data) {
         boolean ownership;
@@ -116,20 +122,22 @@ public final class Constants {
 
             i2 = data.indexOf('"', i1);
             val.add(data.substring(i1, i2));
-            if (DEBUG) Log.d(LOG_TAG, "val = " + data.substring(i1, i2));
+            if (DEBUG) Log.d(LOG_TAG, "Constants.getBaseSet val = " + data.substring(i1, i2));
 
             i1 = data.indexOf('>', i2) + 1;
             i2 = data.indexOf('<', i1);
             s1 = data.substring(i1, i2);
             srv.add(s1.replace("&quot;", "\""));
-            if (DEBUG) Log.d(LOG_TAG, "srv = " + data.substring(i1, i2));
+            if (DEBUG) Log.d(LOG_TAG, "Constants.getBaseSet srv = " + data.substring(i1, i2));
 
         } while ((i1 = data.indexOf(s3, i2) + i3) < (data.indexOf(s2, i2)));
+        if (DEBUG) Log.d(LOG_TAG, "Constants.getBaseSet srv = " + srv);
+        if (DEBUG) Log.d(LOG_TAG, "Constants.getBaseSet val = " + val);
 
         String[] s = new String[srv.size()];
         s = srv.toArray(s);
         String[] v = new String[val.size()];
-        v = srv.toArray(v);
+        v = val.toArray(v);
 
         return new BaseSet(s, v);
     }

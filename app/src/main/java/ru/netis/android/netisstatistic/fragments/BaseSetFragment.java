@@ -1,7 +1,6 @@
 package ru.netis.android.netisstatistic.fragments;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ru.netis.android.netisstatistic.Constants;
 import ru.netis.android.netisstatistic.R;
@@ -41,8 +41,8 @@ public class BaseSetFragment extends Fragment implements View.OnClickListener, D
     Spinner dropdown;
     Button btnFrom;
     Button btnTo;
+    Button btnSubmit;
 
-    public ProgressDialog progressDialog;
     DateOf dateFrom;
     DateOf dateTo;
     private AppCompatActivity activity;
@@ -108,7 +108,7 @@ public class BaseSetFragment extends Fragment implements View.OnClickListener, D
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (DEBUG) Log.d(Constants.LOG_TAG, "onItemSelected position = " + position);
+                if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onCreateView.setOnItemSelectedListener.onItemSelected position = " + position);
                 baseSet.setIndOfService(position);
             }
 
@@ -126,6 +126,9 @@ public class BaseSetFragment extends Fragment implements View.OnClickListener, D
 
         btnTo = (Button) view.findViewById(R.id.btnTo);
         btnTo.setOnClickListener(this);
+
+        btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
+        btnSubmit.setOnClickListener(this);
 
         btnFrom.setText(String.format(strFormat, dateFrom.day, dateFrom.month + 1, dateFrom.year));
         if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onCreateView. baseSet is " + baseSet);
@@ -150,7 +153,12 @@ public class BaseSetFragment extends Fragment implements View.OnClickListener, D
                 break;
             case R.id.btnSubmit:
                 if (mListener != null) {
-                    mListener.onFragmentInteraction(baseSet);
+                    if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSetFragment.onClick mListener is " + mListener);
+                    if (baseSet.getIndOfService() == 0) {
+                        Toast.makeText(getActivity(), getActivity().getResources().getString(R.string.err_srv_choose), Toast.LENGTH_SHORT).show();
+                    } else {
+                        mListener.onFragmentInteraction(baseSet);
+                    }
                 }
                 break;
         }

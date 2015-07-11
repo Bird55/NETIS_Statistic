@@ -16,54 +16,76 @@ import ru.netis.android.netisstatistic.NetisStatApplication;
 
 public class HttpHelper {
 
+    private static final boolean DEBUG = true;
     private HttpURLConnection connection;
     private StringBuilder stringBuilder;
     private String url;
+    private String method;
     private static final String delimiter = "--";
     private static final String boundary =  "SwA"+Long.toString(System.currentTimeMillis())+"SwA";
 
     private CookieManager msCookieManager;
     private static final String lineEnd = "\r\n";
 
+    private boolean isFirst = true;
+    private StringBuilder sb = new StringBuilder();
 
-    public HttpHelper(String url) {
+    public HttpHelper(String url, String method) {
         this.url = url;
+        this.method = method;
         msCookieManager = NetisStatApplication.getInstance().getCookieManager();
         stringBuilder = new StringBuilder();
     }
 
     public String getUrl() {
+        if (sb.length() > 0) {
+            url = sb.toString();
+            sb = new StringBuilder();
+        }
         return url;
     }
 
-    public void connectForMultipart() throws Exception {
+    public void connect() throws Exception {
         connection = (HttpURLConnection) ( new URL(url)).openConnection();
         connection.setInstanceFollowRedirects(false);
         connection.setReadTimeout(10000);
         connection.setConnectTimeout(15000);
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod(method);
         connection.setDoInput(true);
-        connection.setDoOutput(true);
+
+        if (DEBUG) Log.d(Constants.LOG_TAG, "Http.Helper.connect method = \"" + method + "\"");
 
         if(msCookieManager.getCookieStore().getCookies().size() == 0) {
-            Log.d(Constants.LOG_TAG, "connectForMultipart: Set cookie");
+            if (DEBUG) Log.d(Constants.LOG_TAG, "Http.Helper.connect: Set cookie");
             connection.setRequestProperty("Cookie", "SID=-;path=/");
+        } else {
+            if (DEBUG) Log.d(Constants.LOG_TAG, "Http.Helper.connect " + getCookies());
         }
 
         connection.setRequestProperty("Referer", "stat.netis.ru/");
         connection.setRequestProperty("Connection", "Keep-Alive");
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+        if (Constants.POST.equals(method)) {
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+            stringBuilder.append(delimiter).append(boundary).append(delimiter).append(lineEnd);
+        }
+
+//        if (DEBUG) Log.d(Constants.LOG_TAG, "Http.Helper.connect Headers:" + getHeaders());
+        connection.connect();
+        if (Constants.POST.equals(method)) {
+            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+            outputStream.write((stringBuilder.toString()).getBytes());
+        }
     }
 
-    public HttpHelper addFormPart(String paramName, String value) {
+    public HttpHelper addFormMultiPart(String paramName, String value) {
         stringBuilder.append(delimiter).append(boundary).append(lineEnd);
-//        stringBuilder.append("Content-Type: text/plain\r\n");
         stringBuilder.append("Content-Disposition: form-data; name=\"").append(paramName).append("\"").append(lineEnd);
         stringBuilder.append(lineEnd).append(value).append(lineEnd);
         return this;
     }
 
-    public HttpHelper addFormPart(MultipartParameter param) {
+    public HttpHelper addFormMultiPart(MultipartParameter param) {
         stringBuilder.append(delimiter).append(boundary).append(lineEnd);
         stringBuilder.append("Content-Type: ").append(param.getContentType()).append("\r\n");
         stringBuilder.append("Content-Disposition: form-data; name=\"").append(param.getName()).append("\"").append(lineEnd);
@@ -71,13 +93,16 @@ public class HttpHelper {
         return this;
     }
 
-    public void finishMultipart() throws Exception {
-        stringBuilder.append(delimiter).append(boundary).append(delimiter).append(lineEnd);
+    public HttpHelper addFormUrlCode(String paramName, String value) {
+        if (isFirst) {
+            sb.append(url).append("?");
+            isFirst = false;
+        } else {
+            sb.append("&");
+        }
+        sb.append(paramName).append("=").append(value);
 
-        connection.connect();
-        DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-
-        outputStream.write((stringBuilder.toString()).getBytes());
+        return this;
     }
 
     public String getHeaders(){

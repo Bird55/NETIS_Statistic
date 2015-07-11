@@ -39,8 +39,7 @@ public class SendHttpRequestTask extends AsyncTask<Void, Void, String> {
         String data = null;
 
         try {
-            helper.connectForMultipart();
-            helper.finishMultipart();
+            helper.connect();
             data = helper.getResponse();
             if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.doInBackground.Headers: " + helper.getHeaders());
             if (DEBUG) Log.d(Constants.LOG_TAG, "SendHttpRequestTask.doInBackground.Cookies" + helper.getCookies());

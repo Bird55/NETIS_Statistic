@@ -40,9 +40,9 @@ import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 public class MainActivity extends AppCompatActivity implements AsyncTaskListener, LoginDialogFragment.OnLoginCallback, ChPassDialogFragment.OnChPassCallback {
 
-    private static final boolean AUTHO_LOGIN = true;
-    private static final String NAME = "bah";
-    private static final String PASSWORD = "nontronit";
+    private static final boolean AUTO_LOGIN = true;
+    private static final String NAME = "2161";
+    private static final String PASSWORD = "parrot";
 
     private Drawer.Result drawResult;
 
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     protected void onResume() {
         super.onResume();
-        if (AUTHO_LOGIN) {
+        if (AUTO_LOGIN) {
             onLogin(NAME, PASSWORD);
         } else if (client == null) {
                 LoginDialogFragment loginDialog = new LoginDialogFragment();
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
             Log.d(Constants.LOG_TAG, "MainActivity onAsyncTaskFinished cookie = " + (cookie == null ? "null" : cookie));
         } else if (tag == Constants.TAG_LOGIN || tag == Constants.TAG_CHANGE_PASSWORD) {
             AsyncTaskListener listener = this;
-            HttpHelper helper = new HttpHelper(Constants.BASE_URL);
+            HttpHelper helper = new HttpHelper(Constants.BASE_URL, Constants.POST);
             SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_INDEX);
             t.execute();
         } else if (tag == Constants.TAG_INDEX) {
@@ -274,9 +274,9 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onLogin(String name, String password) {
         AsyncTaskListener listener = this;
-        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_LOGIN);
-        helper.addFormPart("user", name);
-        helper.addFormPart("password", password);
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_LOGIN, Constants.POST);
+        helper.addFormMultiPart("user", name);
+        helper.addFormMultiPart("password", password);
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_LOGIN);
         t.execute();
         Log.d(Constants.LOG_TAG, "Name = \"" + name + "\" Password = \"" + password + "\"");
@@ -285,11 +285,11 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onChPass(String oldPass, String newPass, String retPass) {
         AsyncTaskListener listener = this;
-        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CH_PASS);
-        helper.addFormPart("old_pass", oldPass);
-        helper.addFormPart("new_pass", newPass);
-        helper.addFormPart("new_pass1", retPass);
-        helper.addFormPart("change", "Сменить");
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CH_PASS, Constants.POST);
+        helper.addFormMultiPart("old_pass", oldPass);
+        helper.addFormMultiPart("new_pass", newPass);
+        helper.addFormMultiPart("new_pass1", retPass);
+        helper.addFormMultiPart("change", "Сменить");
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_CHANGE_PASSWORD);
         t.execute();
         Log.d(Constants.LOG_TAG, "OldPass = \"" + oldPass + "\" NewPass = \"" + newPass + "\" RetypePass = \"" + retPass + "\"");

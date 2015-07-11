@@ -17,20 +17,20 @@ import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
 import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
-public class BaseActivity extends AppCompatActivity implements AsyncTaskListener, BaseSetFragment.OnBaseSetFragmentListener {
+public class BaseActivity extends AppCompatActivity implements AsyncTaskListener {
     private static final boolean DEBUG = true;
     private BaseSet baseSet = null;
 
     protected String url;
     protected int tag;
-
+    protected ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     protected void start() {
-        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.title_progress_dialog));
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(true);
@@ -39,7 +39,7 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
         if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.start tag = " + tag);
 
         AsyncTaskListener listener = this;
-        HttpHelper helper = new HttpHelper(url);
+        HttpHelper helper = new HttpHelper(url, Constants.POST);
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, tag);
         t.execute();
     }
@@ -61,13 +61,12 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
 
-        int year;
-        int month;
-        int day;
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished.start: data.length() = " + data.length());
+        if (tag == Constants.TAG_CONSUME || tag == Constants.TAG_SESSIONS) {
 
-        if (DEBUG) Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: data.length() = " + data.length());
-        if (DEBUG) Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.start: baseSet is " + baseSet);
-        if (tag == Constants.TAG_CONSUME) {
+            int year;
+            int month;
+            int day;
 
             boolean isFirstTime  = (baseSet == null);
 
@@ -96,11 +95,7 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
             }
             transaction.commit();
         }
-        if (DEBUG) Log.d(Constants.LOG_TAG, "Consume.onAsyncTaskFinished.end: baseSet is " + baseSet);
     }
 
-    @Override
-    public void onFragmentInteraction(BaseSet set) {
 
-    }
 }

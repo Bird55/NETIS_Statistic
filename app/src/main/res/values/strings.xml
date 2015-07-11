@@ -53,6 +53,7 @@
 
     <string name="title_activity_session">SessionsActivity</string>
     <string name="title_activity_base">BaseActivity</string>
+    <string name="err_srv_choose">You must select a service</string>
 
 
 </resources>

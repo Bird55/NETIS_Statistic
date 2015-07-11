@@ -28,6 +28,9 @@ public class BaseSet implements Parcelable {
     public BaseSet(String[] serv, String[] val) {
         ArrayList<String> list = new ArrayList<>();
 
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor serv[1] is \"" + serv[1] + "\"");
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor val[1] is \"" + val[1] + "\"");
+
         list.add(NetisStatApplication.getInstance().getResources().getString(R.string.service_prompt));
         if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor \"" + list.get(0) + "\"");
         Collections.addAll(list, serv);
@@ -39,6 +42,9 @@ public class BaseSet implements Parcelable {
         Collections.addAll(list, val);
         values = new String[list.size()];
         values = list.toArray(values);
+
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor services[1] is \"" + services[1] + "\"");
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseSet.Constructor values[1] is \"" + values[1] + "\"");
 
         indOfService = 0;
     }
@@ -54,25 +60,33 @@ public class BaseSet implements Parcelable {
     public String[] getServices() {
         return services;
     }
+    
+    public String getService(int ind) {
+        return services[ind];
+    }
 
     public String[] getValues() {
         return values;
+    }
+
+    public String getValue(int ind) {
+        return values[ind];
     }
 
     public DateOf getDateFrom() {
         return dateFrom;
     }
 
-    public void setDateFrom(DateOf dataFrom) {
-        this.dateFrom = dataFrom;
+    public void setDateFrom(DateOf dateFrom) {
+        this.dateFrom = dateFrom;
     }
 
     public DateOf getDateTo() {
         return dateTo;
     }
 
-    public void setDateTo(DateOf dataTo) {
-        this.dateTo = dataTo;
+    public void setDateTo(DateOf dateTo) {
+        this.dateTo = dateTo;
     }
 
     public int getIndOfService() {
