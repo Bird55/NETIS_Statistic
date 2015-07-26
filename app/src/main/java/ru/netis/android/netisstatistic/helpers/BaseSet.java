@@ -57,6 +57,21 @@ public class BaseSet implements Parcelable {
         indOfService = source.readInt();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+        if (indOfService > 0) {
+            sb.append("?contr_srv_id=").append(getValue(indOfService));
+            sb.append("&dtsy=").append(Integer.toString(getDateFrom().year));
+            sb.append("&dtsm=").append(Integer.toString(getDateFrom().month + 1));
+            sb.append("&dtsd=").append(Integer.toString(getDateFrom().day));
+            sb.append("&dtey=").append(Integer.toString(getDateTo().year));
+            sb.append("&dtem=").append(Integer.toString(getDateTo().month + 1));
+            sb.append("&dted=").append(Integer.toString(getDateTo().day));
+        }
+        return sb.toString();
+    }
+
     public String[] getServices() {
         return services;
     }

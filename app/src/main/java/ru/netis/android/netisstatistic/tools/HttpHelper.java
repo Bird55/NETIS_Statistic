@@ -40,13 +40,12 @@ public class HttpHelper {
     public String getUrl() {
         if (sb.length() > 0) {
             url = sb.toString();
-            sb = new StringBuilder();
         }
         return url;
     }
 
     public void connect() throws Exception {
-        connection = (HttpURLConnection) ( new URL(url)).openConnection();
+        connection = (HttpURLConnection) ( new URL(getUrl())).openConnection();
         connection.setInstanceFollowRedirects(false);
         connection.setReadTimeout(10000);
         connection.setConnectTimeout(15000);

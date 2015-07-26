@@ -47,7 +47,7 @@ public class SessionsActivity extends BaseActivity implements BaseSetFragment.On
             e.printStackTrace();
         }
 
-        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onRestoreInstanceState url is " + helper.getUrl());
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onRestoreInstanceState set = " + set);
 
         SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_GET_SESSIONS);
         t.execute();
@@ -60,23 +60,11 @@ public class SessionsActivity extends BaseActivity implements BaseSetFragment.On
             super.onAsyncTaskFinished(data, tag);
             return;
         }
-        int i = data.indexOf("10:7B:EF:5C:F1:19");//"<table class=\"data frame-small\"");
+        int i = 0;
+        while (data.indexOf("<table class=\"data frame-small\"") > 0) {
+            i++;
+        }
         String s = data.substring(i);
-        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished  " + s);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished i = " + i);
     }
 }
-
-/*
-
-?contr_srv_id=-380
-&dtsy=2015
-&dtsm=07
-&dtsd=01
-&dtey=2015
-&dtem=07
-&dted=31
-&out_fmt=DEFAULT
-&order=by-dts-asc
-&showlist=Вывести+список
-
-*/
