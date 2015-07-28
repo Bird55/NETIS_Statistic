@@ -56,15 +56,14 @@ public class SessionsActivity extends BaseActivity implements BaseSetFragment.On
     
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished start: tag = " + tag);
         if (tag != Constants.TAG_GET_SESSIONS) {
             super.onAsyncTaskFinished(data, tag);
             return;
         }
-        int i = 0;
-        while (data.indexOf("<table class=\"data frame-small\"") > 0) {
-            i++;
-        }
-        String s = data.substring(i);
-        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished i = " + i);
+
+        int i = data.indexOf("2161");
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished i = " + data.length());
+        System.out.println(data);
     }
 }

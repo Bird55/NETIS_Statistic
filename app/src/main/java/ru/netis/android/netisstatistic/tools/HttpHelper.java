@@ -16,7 +16,7 @@ import ru.netis.android.netisstatistic.NetisStatApplication;
 
 public class HttpHelper {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private HttpURLConnection connection;
     private StringBuilder stringBuilder;
     private String url;

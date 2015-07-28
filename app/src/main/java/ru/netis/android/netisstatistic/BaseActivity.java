@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
     @Override
     public void onAsyncTaskFinished(String data, int tag) {
 
-        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished.start: data.length() = " + data.length());
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished start: data.length() = " + data.length());
         if (tag == Constants.TAG_CONSUME || tag == Constants.TAG_SESSIONS) {
 
             int year;
@@ -74,6 +74,7 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
             FragmentTransaction transaction = manager.beginTransaction();
 
             if (isFirstTime) {
+                if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished first");
                 baseSet = Constants.getBaseSet(data);
 
                 final Calendar c = Calendar.getInstance();
@@ -90,11 +91,13 @@ public class BaseActivity extends AppCompatActivity implements AsyncTaskListener
                 transaction.add(R.id.baseSetContainer, baseSetFragment);
 
             } else {
+                if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished not first");
                 BaseSetFragment baseSetFragment = BaseSetFragment.newInstance(baseSet);
                 transaction.replace(R.id.baseSetContainer, baseSetFragment);
             }
             transaction.commit();
         }
+        if (DEBUG) Log.d(Constants.LOG_TAG, "BaseActivity.onAsyncTaskFinished finish:");
     }
 
 
