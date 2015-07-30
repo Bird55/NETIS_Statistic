@@ -1,7 +1,11 @@
 package ru.netis.android.netisstatistic;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -10,6 +14,7 @@ import ru.netis.android.netisstatistic.fragments.BaseSetFragment;
 import ru.netis.android.netisstatistic.helpers.BaseSet;
 import ru.netis.android.netisstatistic.tools.AsyncTaskListener;
 import ru.netis.android.netisstatistic.tools.HttpHelper;
+import ru.netis.android.netisstatistic.tools.SendHttpRequestTask;
 
 public class ConsumeActivity extends BaseActivity implements BaseSetFragment.OnBaseSetFragmentListener {
 
@@ -28,7 +33,7 @@ public class ConsumeActivity extends BaseActivity implements BaseSetFragment.OnB
     @Override
     public void onFragmentInteraction(BaseSet set) {
         AsyncTaskListener listener = this;
-        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CONSUME, Constants.POST);
+        HttpHelper helper = new HttpHelper(Constants.BASE_URL + URL_CONSUME, Constants.GET);
 
         int ind = set.getIndOfService();
         helper.addFormUrlCode("contr_srv_id", set.getValue(ind));
@@ -47,27 +52,53 @@ public class ConsumeActivity extends BaseActivity implements BaseSetFragment.OnB
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        helper.addFormUrlCode(".cgifields", "tax*");
+        helper.addFormUrlCode(".cgifields", "tax");
 
-        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onRestoreInstanceState url is " + helper.getUrl());
+        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onRestoreInstanceState set = " + set);
 
-//        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_GET_CONSUME);
-//        t.execute();
+        SendHttpRequestTask t = new SendHttpRequestTask(helper, listener, progressDialog, Constants.TAG_GET_CONSUME);
+        t.execute();
+    }
+
+    @Override
+    public void onAsyncTaskFinished(String data, int tag) {
+        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onAsyncTaskFinished start: tag = " + tag);
+        if (tag != Constants.TAG_GET_CONSUME) {
+            super.onAsyncTaskFinished(data, tag);
+            return;
+        }
+
+        new ParseData().execute(data);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "ConsumeActivity.onAsyncTaskFinished finish:");
+
+    }
+
+    class ParseData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Document doc;
+            StringBuilder builder = new StringBuilder();
+            doc = Jsoup.parse(params[0]);
+//
+//            Elements trs = doc.select("table.data tr");
+//            Log.d(Constants.LOG_TAG, "SessionsActivity.ParseData.onInBackground: length = " + trs.size());
+//            trs.remove(0);
+//            for (Element tr: trs) {
+//                Elements tds = tr.getElementsByTag("td");
+//                for (Element td: tds) {
+//                    builder.append(td.text()).append(":");
+//                }
+//                builder.append("/r/n");
+//            }
+//            return builder.toString();
+            return doc.title();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d(Constants.LOG_TAG, "SessionsActivity.ParseData.onPostExecute: table = " + s);
+        }
     }
 }
-
-/*
-http://stat.netis.ru/view/consume.pl
-?contr_srv_id=-380
-&dtsy=2015
-&dtsm=07
-&dtsd=01
-&dtey=2015
-&dtem=07
-&dted=31
-&out_fmt=DEFAULT
-&info=value
-&unit=3600
-&order=by-dts-asc
-&showlist=%D0%92%D1%8B%D0%B2%D0%B5%D1%81%D1%82%D0%B8+%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA
-&.cgifields=tax*/

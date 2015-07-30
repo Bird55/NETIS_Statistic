@@ -1,7 +1,13 @@
 package ru.netis.android.netisstatistic;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -62,8 +68,37 @@ public class SessionsActivity extends BaseActivity implements BaseSetFragment.On
             return;
         }
 
-        int i = data.indexOf("2161");
-        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished i = " + data.length());
-        System.out.println(data);
+        new ParseData().execute(data);
+        if (DEBUG) Log.d(Constants.LOG_TAG, "SessionsActivity.onAsyncTaskFinished finish:");
+
+    }
+
+    class ParseData extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            Document doc;
+            StringBuilder builder = new StringBuilder();
+            doc = Jsoup.parse(params[0]);
+//
+//            Elements trs = doc.select("table.data tr");
+//            Log.d(Constants.LOG_TAG, "SessionsActivity.ParseData.onInBackground: length = " + trs.size());
+//            trs.remove(0);
+//            for (Element tr: trs) {
+//                Elements tds = tr.getElementsByTag("td");
+//                for (Element td: tds) {
+//                    builder.append(td.text()).append(":");
+//                }
+//                builder.append("/r/n");
+//            }
+//            return builder.toString();
+            return doc.title();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d(Constants.LOG_TAG, "SessionsActivity.ParseData.onPostExecute: table = " + s);
+        }
     }
 }
